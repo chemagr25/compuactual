@@ -28,7 +28,9 @@ const router = createRouter({
         }
       ]
     },
-    //dashboard
+
+    //* admin-routes
+    
     {
       path: '/admin',
       name: 'root-admin',

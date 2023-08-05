@@ -1,8 +1,8 @@
 import { apiAuth } from '@/api/apiAuth'
-import { inject, ref } from 'vue'
+import {  ref } from 'vue'
 import { showToast } from '@/helpers/showToast'
 import type { Login } from '@/interfaces/login'
-import type { VueCookies } from 'vue-cookies'
+// import type { VueCookies } from 'vue-cookies'
 
 const username = ref<string>()
 const password = ref<string>()

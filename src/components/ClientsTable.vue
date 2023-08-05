@@ -3,14 +3,20 @@
 import { onMounted } from 'vue';
 import { EyeIcon } from '@heroicons/vue/24/outline';
 import Loader from '@/components/Loader.vue'
+import PaginationTable from './PaginationTable.vue';
 import ClientsAddForm from '@/components/ClientAddForm.vue'
+
 import { useClient } from '@/composables/useClient';
 
-const {isLoading, clients, getAllClients} = useClient()
+
+const { isLoading, clients, getAllClients,totalPages,page } = useClient()
 
 
-
-
+const getPage = async (newPage: number) => {
+    if (page.value + 1 === newPage) return
+    page.value = newPage - 1
+    await getAllClients()
+}
 
 onMounted(async () => {
     await getAllClients()
@@ -35,20 +41,20 @@ onMounted(async () => {
                 <table class="table">
                     <thead class="text-neutral text-sm ">
                         <tr class="">
-                            <th>Nombre de usuario</th>
-                            <th>Nombre </th>
+                            <th>Nombre</th>
+                            <th>Nombre de usuario </th>
                             <th>Correo</th>
                             <th>Teléfono</th>
                             <th class="text-center">Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="client of clients">
-                            <th>{{ client.username}}</th>
-                            <td>{{ client.name }} {{ client.lastName}}</td>
-                            <td>  {{ client.email }}</td>
-                            <td>{{ client.phone }}  </td>
-                           
+                        <tr v-for="client of clients" :key="client.id">
+                            <td>{{ client.name }} {{ client.lastName }}</td>
+                            <th>{{ client.username }}</th>
+                            <td> {{ client.email }}</td>
+                            <td>{{ client.phone }} </td>
+
                             <td>
                                 <div class="w-full flex justify-center ">
                                     <div class="rounded-xl hover:bg-gray-500/50 flex gap-2 px-2 py-1.5 ">
@@ -61,6 +67,10 @@ onMounted(async () => {
                     </tbody>
                 </table>
             </div>
+        </div>
+
+        <div class="mt-5 flex justify-center">
+            <PaginationTable @getPage="getPage" :currentPage="page + 1" :totalPages="totalPages"></PaginationTable>
         </div>
     </div>
 </template>

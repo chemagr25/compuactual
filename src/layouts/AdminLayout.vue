@@ -19,7 +19,7 @@ const sidebarActions: SideBarItem[] = [
 <template>
     <main>
         <div>
-            <nav class="bg-secondary text-neutral fixed z-30 h-16 shadow-lg border-b border-base-300 w-full">
+            <nav class="bg-secondary text-neutral fixed z-30 h-16  w-full">
                 <div class="px-3 py-3  h-full flex items-center lg:px-5 lg:pl-3">
                     <div class="flex items-center  w-full justify-between">
                         <div class="flex items-center justify-start">
@@ -69,7 +69,7 @@ const sidebarActions: SideBarItem[] = [
                         <div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
                             <div class="flex-1 px-3  divide-y space-y-1">
                                 <ul class="space-y-4 pb-2">
-                                    <li v-for="item in sidebarActions">
+                                    <li v-for="item in sidebarActions" :key="item.name">
                                         <router-link :to="{ name: item.name }"
                                             class="text-base text-gray font-normal  hover:bg-accent/20  rounded-lg flex items-center p-2 group">
                                             <component :is="item.icon.name" class="w-6"></component>

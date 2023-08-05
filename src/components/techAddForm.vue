@@ -1,6 +1,20 @@
 
 <script setup lang="ts">
-import {UserPlusIcon } from '@heroicons/vue/24/outline';
+import { useTech } from '@/composables/useTech';
+import Loader from './Loader.vue';
+
+const {
+    isLoading,
+    hasError,
+    createTech,
+    username,
+    email,
+    name,
+    lastName,
+    phone,
+    password } = useTech()
+
+import { UserPlusIcon } from '@heroicons/vue/24/outline';
 import { ref } from 'vue'
 import {
     TransitionRoot,
@@ -18,13 +32,22 @@ const closeModal = () => {
 const openModal = () => {
     isOpen.value = true
 }
+const sendTech = () => {
+    createTech().then(()=> {
+        if(!hasError.value) return closeModal()
+    })
+
+}
+
+
+
 
 </script>
 
 <template>
     <div class=" flex items-center justify-center">
         <button type="button" @click="openModal" class=" btn border-none bg-accent/80 text-white ">
-            <UserPlusIcon class="w-5"/>
+            <UserPlusIcon class="w-5" />
             <p class="hidden md:block">Agregar técnico</p>
         </button>
     </div>
@@ -45,46 +68,46 @@ const openModal = () => {
                             <DialogTitle as="h3" class="text-lg font-medium leading-6">
                                 Agregar técnico
                             </DialogTitle>
-                            <div class=" gap-2 w-full mt-2 flex flex-wrap">
+
+                            <div v-if="isLoading" class=" flex justify-center">
+                                <Loader></Loader>
+
+                            </div>
+                            <div v-else class=" gap-2 w-full mt-2 flex flex-wrap">
                                 <div class="grid grid-cols-4 lg:grid-cols-3 gap-2  m-auto">
+
+                                    <div class="col-span-4 lg:col-span-1">
+                                        <input type="text" placeholder="Nombre" v-model="name"
+                                            class="input border border-base-300 focus:outline-none w-full bg-primary" />
+                                    </div>
+                                    <div class="col-span-4 lg:col-span-1">
+                                        <input type="text" placeholder="Apellidos" v-model="lastName"
+                                            class="input border border-base-300 focus:outline-none w-full bg-primary" />
+                                    </div>
                                     <div class="col-span-2 lg:col-span-1">
-                                        <input type="text" placeholder="Marca"
+                                        <input type="text" placeholder="Teléfono" v-model="phone"
+                                            class="input border border-base-300 focus:outline-none w-full bg-primary" />
+                                    </div>
+                                    <div class="col-span-2 lg:col-span-1">
+                                        <input type="text" placeholder="Correo" v-model="email"
+                                            class="input border border-base-300 focus:outline-none w-full bg-primary" />
+                                    </div>
+                                    <div class="col-span-2 lg:col-span-1">
+                                        <input type="text" placeholder="Usuario" v-model="username"
+                                            class="input border border-base-300 focus:outline-none w-full bg-primary" />
+                                    </div>
+                                    <div class="col-span-2 lg:col-span-1">
+                                        <input type="text" placeholder="Contraseña" v-model="password"
                                             class="input border border-base-300 focus:outline-none w-full bg-primary" />
                                     </div>
 
-                                    <div class="col-span-2 lg:col-span-1">
-                                        <input type="text" placeholder="Marca"
-                                            class="input border border-base-300 focus:outline-none w-full bg-primary" />
-                                    </div>
-                                    <div class="col-span-2 lg:col-span-1">
-                                        <input type="text" placeholder="Marca"
-                                            class="input border border-base-300 focus:outline-none w-full bg-primary" />
-                                    </div>
-                                    <div class="col-span-2 lg:col-span-1">
-                                        <input type="text" placeholder="Marca"
-                                            class="input border border-base-300 focus:outline-none w-full bg-primary" />
-                                    </div>
-                                    <div class="col-span-2 lg:col-span-1">
-                                        <input type="text" placeholder="Marca"
-                                            class="input border border-base-300 focus:outline-none w-full bg-primary" />
-                                    </div>
-                                    <div class="col-span-2 lg:col-span-1">
-                                        <input type="text" placeholder="Marca"
-                                            class="input border border-base-300 focus:outline-none w-full bg-primary" />
-                                    </div>
-                                    <div class="col-span-2 lg:col-span-1">
-                                        <input type="text" placeholder="Marca"
-                                            class="input border border-base-300 focus:outline-none w-full bg-primary" />
-                                    </div>
-                                    <div class="col-span-2 lg:col-span-1">
-                                        <input type="text" placeholder="Marca"
-                                            class="input border border-base-300 focus:outline-none w-full bg-primary" />
-                                    </div>
                                 </div>
                             </div>
-                            <div class="w-full flex justify-end mt-5">
-                                <button class="btn text-white bg-accent/80 border-none">Crear</button>
 
+
+                            <div class="w-full flex justify-end mt-5">
+                                <button :disabled="isLoading" @click="sendTech"
+                                    class="btn text-white bg-accent/80 border-none">Crear</button>
                             </div>
 
                         </DialogPanel>

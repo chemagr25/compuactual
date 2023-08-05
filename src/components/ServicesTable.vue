@@ -5,10 +5,19 @@ import { useService } from '@/composables/useService';
 import { EyeIcon } from '@heroicons/vue/24/outline';
 import Loader from '@/components/Loader.vue'
 
+import PaginationTable from '@/components/PaginationTable.vue';
+
 import { capitalize, setColor } from '@/helpers/capitalizestr'
-const { getAllServices, services, isLoading } = useService()
+const { getAllServices, services, isLoading , totalPages, page} = useService()
 
 import ServiceAddForm from '@/components/ServiceAddForm.vue';
+
+
+const getPage = async (newPage: number) => {
+    if (page.value + 1 === newPage) return
+    page.value = newPage - 1
+    await getAllServices()
+}
 
 
 onMounted(async () => {
@@ -17,6 +26,8 @@ onMounted(async () => {
 </script>
 
 <template>
+
+
     <div v-if="isLoading" class="w-full h-full overflow-hidden flex mt-5 justify-center">
         <Loader />
     </div>
@@ -43,15 +54,16 @@ onMounted(async () => {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="service of services">
-                            <th>{{ service.invoice.split('-').join('') }}</th>
+                        <tr v-for="service of services" class="mb-none">
+                            <th>{{ service.id }} {{ service.invoice.split('-').join('') }}</th>
                             <td>{{ service.dateReceived }} </td>
-                            <td>{{ service.idClient }} Cliente </td>
-                            <td>{{ service.idDevice }} Dispositivo </td>
+                            <td>{{ service.client.name }} {{ service.client.lastName }}  </td>
+                            <td>{{ service.device.brand }} {{ service.device.model }}</td>
                             <td>
-                                <span :class="setColor(capitalize(service.status))" class="px-1.5 py-1 rounded-xl">{{
-                                    capitalize(service.status) }}
-                                </span>
+                                <span :class="setColor(capitalize(service.status))" class="px-1.5  py-1 rounded-xl">{{ service.status.includes('ON')
+                                 ? capitalize(service.status).replace('on','ón') 
+                                 : capitalize(service.status) }}
+                                </span> 
                             </td>
                             <td>
                                 <div class="w-full flex justify-center ">
@@ -66,8 +78,11 @@ onMounted(async () => {
                 </table>
             </div>
         </div>
+
+        <div class="mt-5 flex  justify-center">
+            <PaginationTable @getPage="getPage" :currentPage="page + 1" :totalPages="totalPages"></PaginationTable>
+        </div>
     </div>
 </template>
 
 
-<style scoped></style>

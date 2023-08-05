@@ -1,7 +1,17 @@
 
 <script setup lang="ts">
-import { UserPlusIcon} from '@heroicons/vue/24/outline';
+import { UserPlusIcon } from '@heroicons/vue/24/outline';
 import { ref } from 'vue'
+import { useClient } from '@/composables/useClient';
+import Loader from '@/components/Loader.vue';
+
+const {
+    username,
+    email,
+    name,
+    lastName,
+    phone, isLoading, createClient, hasError } = useClient()
+
 import {
     TransitionRoot,
     TransitionChild,
@@ -19,12 +29,20 @@ const openModal = () => {
     isOpen.value = true
 }
 
+
+const sendClient = () => {
+    createClient().then(()=> {
+        if(!hasError.value) return closeModal()
+    })
+
+}
+
 </script>
 
 <template>
     <div class=" flex items-center justify-center">
         <button type="button" @click="openModal" class=" btn border-none bg-accent/80 text-white ">
-            <UserPlusIcon class="w-5"/>
+            <UserPlusIcon class="w-5" />
             <p class="hidden md:block">Agregar cliente</p>
         </button>
     </div>
@@ -46,44 +64,40 @@ const openModal = () => {
                                 Agregar cliente
                             </DialogTitle>
                             <div class=" gap-2 w-full mt-2 flex flex-wrap">
-                                <div class="grid grid-cols-4 lg:grid-cols-3 gap-2  m-auto">
+
+                                <div class="w-full  flex justify-center" v-if="isLoading">
+                                    <Loader></Loader>
+                                </div>
+
+
+                                <div v-else class="grid grid-cols-4 lg:grid-cols-3 gap-2  m-auto">
+
+                                    <div class="col-span-4 lg:col-span-1">
+                                        <input type="text" placeholder="Nombre" v-model="name"
+                                            class="input border border-base-300 focus:outline-none w-full bg-primary" />
+                                    </div>
+                                    <div class="col-span-4 lg:col-span-1">
+                                        <input type="text" placeholder="Apellidos" v-model="lastName"
+                                            class="input border border-base-300 focus:outline-none w-full bg-primary" />
+                                    </div>
                                     <div class="col-span-2 lg:col-span-1">
-                                        <input type="text" placeholder="Marca"
+                                        <input type="text" placeholder="Usuario" v-model="username"
+                                            class="input border border-base-300 focus:outline-none w-full bg-primary" />
+                                    </div>
+                                    <div class="col-span-2 lg:col-span-1">
+                                        <input type="text" placeholder="Teléfono" v-model="phone"
+                                            class="input border border-base-300 focus:outline-none w-full bg-primary" />
+                                    </div>
+                                    <div class="col-span-4 lg:col-span-1">
+                                        <input type="text" placeholder="Correo" v-model="email"
                                             class="input border border-base-300 focus:outline-none w-full bg-primary" />
                                     </div>
 
-                                    <div class="col-span-2 lg:col-span-1">
-                                        <input type="text" placeholder="Marca"
-                                            class="input border border-base-300 focus:outline-none w-full bg-primary" />
-                                    </div>
-                                    <div class="col-span-2 lg:col-span-1">
-                                        <input type="text" placeholder="Marca"
-                                            class="input border border-base-300 focus:outline-none w-full bg-primary" />
-                                    </div>
-                                    <div class="col-span-2 lg:col-span-1">
-                                        <input type="text" placeholder="Marca"
-                                            class="input border border-base-300 focus:outline-none w-full bg-primary" />
-                                    </div>
-                                    <div class="col-span-2 lg:col-span-1">
-                                        <input type="text" placeholder="Marca"
-                                            class="input border border-base-300 focus:outline-none w-full bg-primary" />
-                                    </div>
-                                    <div class="col-span-2 lg:col-span-1">
-                                        <input type="text" placeholder="Marca"
-                                            class="input border border-base-300 focus:outline-none w-full bg-primary" />
-                                    </div>
-                                    <div class="col-span-2 lg:col-span-1">
-                                        <input type="text" placeholder="Marca"
-                                            class="input border border-base-300 focus:outline-none w-full bg-primary" />
-                                    </div>
-                                    <div class="col-span-2 lg:col-span-1">
-                                        <input type="text" placeholder="Marca"
-                                            class="input border border-base-300 focus:outline-none w-full bg-primary" />
-                                    </div>
+
                                 </div>
                             </div>
                             <div class="w-full flex justify-end mt-5">
-                                <button class="btn text-white bg-accent/80 border-none">Agregar</button>
+                                <button :disabled="isLoading" @click="sendClient" class="btn text-white bg-accent/80 border-none">Crear</button>
 
                             </div>
 

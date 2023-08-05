@@ -4,16 +4,26 @@ import { onMounted } from 'vue';
 import { useTech } from '@/composables/useTech';
 import { EyeIcon } from '@heroicons/vue/24/outline';
 import Loader from '@/components/Loader.vue'
+import PaginationTable from './PaginationTable.vue';
 
 
-const {isLoading, getAllTechs, technicians} = useTech()
+const { isLoading, getAllTechs, technicians, page, totalPages } = useTech()
 
 import TechAddForm from '@/components/techAddForm.vue';
 
+    const getPage = async (newPage: number) => {
+        if (page.value + 1 === newPage) return
+        page.value = newPage - 1
+        await getAllTechs()
+
+
+
+    }
 
 onMounted(async () => {
     await getAllTechs()
 })
+
 </script>
 
 <template>
@@ -43,11 +53,11 @@ onMounted(async () => {
                     </thead>
                     <tbody>
                         <tr v-for="tech of technicians">
-                            <th>{{ tech.name }} {{ tech.lastName }}</th>
+                            <th>{{ tech.id }} {{ tech.name }} {{ tech.lastName }}</th>
                             <th>{{ tech.username }}</th>
                             <th>{{ tech.email }}</th>
                             <th>{{ tech.phone }}</th>
-                       
+
                             <td>
                                 <div class="w-full flex justify-center ">
                                     <div class="rounded-xl hover:bg-gray-500/50 flex gap-2 px-2 py-1.5 ">
@@ -61,6 +71,13 @@ onMounted(async () => {
                 </table>
             </div>
         </div>
+
+        <div class=" mt-5  flex justify-center">
+
+            <PaginationTable @getPage="getPage" :currentPage="page + 1" :totalPages="totalPages"></PaginationTable>
+        </div>
+
+
     </div>
 </template>
 

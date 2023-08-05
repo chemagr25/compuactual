@@ -3,7 +3,7 @@ import LoaderButton from '@/components/LoaderButton.vue'
 
 import { useLogin } from '@/composables/useLogin'
 
-const { username, password, sendLogin, hasError, isLoading } = useLogin()
+const { username, password, sendLogin,  isLoading } = useLogin()
 
 </script>
 
