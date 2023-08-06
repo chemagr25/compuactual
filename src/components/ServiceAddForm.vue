@@ -4,6 +4,7 @@ import { DocumentPlusIcon } from '@heroicons/vue/24/outline';
 import ComboClient from '@/components/ComboClient.vue';
 import ComboTech from '@/components/ComboTech.vue';
 import { useService } from '@/composables/useService';
+import Loader from '@/components/Loader.vue';
 
 
 const { brand,
@@ -15,7 +16,7 @@ const { brand,
     observations,
     description,
     price,
-    createService } = useService()
+    createService, isLoading, hasError } = useService()
 
 import { ref } from 'vue'
 import {
@@ -33,6 +34,16 @@ const closeModal = () => {
 }
 const openModal = () => {
     isOpen.value = true
+}
+
+
+const sendService = () => {
+  
+createService().then(()=> {
+    if(!hasError.value) return closeModal()
+})
+
+
 }
 
 </script>
@@ -62,7 +73,12 @@ const openModal = () => {
                                 Crear servicio
                             </DialogTitle>
                             <div class=" gap-2 w-full mt-2 flex flex-wrap">
-                                <div class="grid grid-cols-4 lg:grid-cols-3 gap-2  m-auto">
+                                <div class=" flex justify-center w-full" v-if="isLoading">
+
+                                        <Loader></Loader>
+                                </div>
+
+                                <div v-else class="grid grid-cols-4 lg:grid-cols-3 gap-2  m-auto">
 
                                     <div class="col-span-4 lg:col-span-1">
                                         <p class="text-xs ml-1 font-medium">Marca</p>
@@ -121,7 +137,7 @@ const openModal = () => {
                                 </div>
                             </div>
                             <div class="w-full flex justify-end mt-5">
-                                <button @click="createService" class="btn text-white bg-accent/80 border-none">Crear</button>
+                                <button :disabled="isLoading" @click="sendService" class="btn text-white bg-accent/80 border-none">Crear</button>
 
                             </div>
 

@@ -9,14 +9,14 @@ const isLoading = ref<boolean>(false)
 
 import { useService } from '@/composables/useService';
 
-const  {idTechnician} = useService()
+const  {idClient} = useService()
 
 import LoaderButton from '@/components/LoaderButton.vue';
 
 const selectClient = (id: number, name: string, lastName: string) => {
 
   enterName.value = name + ' ' + lastName
-  idTechnician.value = id+'';
+  idClient.value = id+'';
   matchTechs.value = []
 
 }

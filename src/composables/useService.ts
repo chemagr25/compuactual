@@ -1,4 +1,5 @@
 import { apiResources } from '@/api/apiResources'
+import { showToast } from '@/helpers/showToast'
 import type { Service, ServiceResponse } from '@/interfaces/service'
 import { ref } from 'vue'
 
@@ -20,6 +21,7 @@ const price = ref<string>()
 const observation = ref<string>('observacion del servicio')
 
 export const useService = () => {
+  const hasError = ref<boolean>(false)
   const isLoading = ref<boolean>(false)
   const getAllServices = async () => {
     isLoading.value = true
@@ -41,6 +43,7 @@ export const useService = () => {
   }
 
   const createService = async () => {
+    isLoading.value = true
     try {
       const resp = await apiResources.post(
         '/services',
@@ -68,11 +71,14 @@ export const useService = () => {
         }
       )
 
-      console.log(resp)
+      
       await getAllServices()
+      isLoading.value = false
+      showToast('Éxito', 'Servicio creado correctamente', 'success')
     } catch {
-
-      console.log('error')
+      showToast('Error', 'Revisa los datos e inténtalo nuevamente')
+      isLoading.value = false
+     hasError.value = true
     }
   }
 
@@ -94,6 +100,7 @@ export const useService = () => {
     idTechnician,
     price,
     observation,
-    createService
+    createService,
+    hasError
   }
 }

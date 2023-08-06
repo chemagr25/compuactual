@@ -19,7 +19,7 @@ const sidebarActions: SideBarItem[] = [
 <template>
     <main>
         <div>
-            <nav class="bg-secondary text-neutral fixed z-30 h-16  w-full">
+            <nav class="bg-secondary text-neutral border-b border-base-300 shadow-lg fixed z-30 h-16  w-full">
                 <div class="px-3 py-3  h-full flex items-center lg:px-5 lg:pl-3">
                     <div class="flex items-center  w-full justify-between">
                         <div class="flex items-center justify-start">
@@ -65,7 +65,7 @@ const sidebarActions: SideBarItem[] = [
                     class="fixed  z-20  h-full top-0 left-0 pt-16  lg:flex flex-shrink-0 flex-col w-56 transition-width duration-75"
                     aria-label="Sidebar">
                     <div
-                        class="relative flex-1 flex flex-col min-h-0 bg-secondary border-r border-base-300 text-neutral h-full pt-0">
+                        class="relative flex-1 flex flex-col min-h-0 bg-secondary shadow-xl text-neutral h-full pt-0">
                         <div class="flex-1 flex flex-col pt-5 pb-4 overflow-y-auto">
                             <div class="flex-1 px-3  divide-y space-y-1">
                                 <ul class="space-y-4 pb-2">
