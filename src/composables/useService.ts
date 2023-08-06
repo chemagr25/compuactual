@@ -14,10 +14,10 @@ const ram = ref<string>()
 const storage = ref<string>()
 const observations = ref<string>()
 const description = ref<string>()
-const idClient =ref<string>()
-const idTechnician =ref<string>()
-const price =ref<string>()
-const observation =ref<string>('observacion del servicio')
+const idClient = ref<string>()
+const idTechnician = ref<string>()
+const price = ref<string>()
+const observation = ref<string>('observacion del servicio')
 
 export const useService = () => {
   const isLoading = ref<boolean>(false)
@@ -40,23 +40,40 @@ export const useService = () => {
     }
   }
 
+  const createService = async () => {
+    try {
+      const resp = await apiResources.post(
+        '/services',
+        {
+          device: {
+            brand: brand.value,
+            model: model.value,
+            serialNumber: serialNumber.value,
+            processor: processor.value,
+            ram: ram.value,
+            storage: storage.value,
+            observations: observations.value
+          },
 
+          description: description.value,
+          idClient: idClient.value,
+          idTechnician: idTechnician.value,
+          price: price.value,
+          observation: observation.value
+        },
+        {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token_auth')
+          }
+        }
+      )
 
-  const createService = () => {
-    console.log(
-      brand.value,
-      model.value,
-      serialNumber.value,
-      processor.value,
-      ram.value,
-      storage.value,
-      observations.value,
-      description.value,
-      idClient.value,
-      idTechnician.value,
-      price.value,
-      observation.value,
-    )
+      console.log(resp)
+      await getAllServices()
+    } catch {
+
+      console.log('error')
+    }
   }
 
   return {

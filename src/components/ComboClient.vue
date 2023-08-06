@@ -48,7 +48,7 @@ watch(enterName, async (newValue) => {
 </script>
 
 <template>
-  <input type="text" v-model="enterName" placeholder="Client" class="input border border-base-300 focus:outline-none w-full bg-primary">
+  <input type="text" v-model="enterName" placeholder="Cliente" class="input border border-base-300 focus:outline-none w-full bg-primary">
 
   <div v-if="matchTechs.length > 0   || isLoading"
     class="absolute mt-1 p-1 max-h-20 w-40 lg:w-56  md:w-52 ml-1 overflow-auto rounded-md bg-primary py-1 text-base shadow-lg  focus:outline-none sm:text-sm border border-base-300">
