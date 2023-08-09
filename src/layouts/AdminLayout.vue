@@ -2,6 +2,8 @@
 import { ref } from 'vue'
 import { ClipboardDocumentListIcon, UsersIcon, WrenchScrewdriverIcon } from '@heroicons/vue/24/outline'
 
+import BottomNavigation from '@/components/BottomNavigation.vue';
+
 
 import type { SideBarItem } from '@/interfaces/sidebar-item'
 
@@ -18,21 +20,21 @@ const sidebarActions: SideBarItem[] = [
 
 <template>
     <main>
-        <div>
+        <div class="mb-20">
             <nav class="bg-secondary text-neutral border-b border-base-300 shadow-lg fixed z-30 h-16  w-full">
                 <div class="px-3 py-3  h-full flex items-center lg:px-5 lg:pl-3">
                     <div class="flex items-center  w-full justify-between">
                         <div class="flex items-center justify-start">
                             <button @click="showSideMobile = !showSideMobile" id="toggleSidebarMobile" aria-expanded="false"
                                 aria-controls="sidebar"
-                                class="lg:hidden mr-2 text-accent cursor-pointer p-2 rounded">
+                                class="hidden sm:block  mr-2 text-accent cursor-pointer p-2 rounded">
                                 <svg v-show="!showSideMobile" id="toggleSidebarMobileHamburger" class="w-6 h-6"
                                     fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                     <path fill-rule="evenodd"
                                         d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h6a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
                                         clip-rule="evenodd"></path>
                                 </svg>
-                                <svg v-show="showSideMobile" xmlns="http://www.w3.org/2000/svg" fill="none"
+                                <svg  v-show="showSideMobile" xmlns="http://www.w3.org/2000/svg" fill="none"
                                     viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
                                 </svg>
@@ -90,7 +92,11 @@ const sidebarActions: SideBarItem[] = [
 
                 </div>
             </div>
+
+
         </div>
+
+        <BottomNavigation class="block sm:hidden" :items="sidebarActions"></BottomNavigation>
 
     </main>
 </template>
