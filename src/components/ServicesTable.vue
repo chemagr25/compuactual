@@ -69,8 +69,13 @@ onMounted(async () => {
               <td>
                 <div class="w-full flex justify-center">
                   <div class="rounded-xl hover:bg-gray-500/50 flex gap-2 px-2 py-1.5">
-                    <EyeIcon class="w-4"></EyeIcon>
-                    <p class="hidden lg:block">Ver detalles</p>
+                    <router-link
+                      class="flex gap-1"
+                      :to="{ name: 'services-details', params: { id: service.id } }"
+                    >
+                      <EyeIcon class="w-4"></EyeIcon>
+                      <p class="hidden lg:block">Ver detalles</p>
+                    </router-link>
                   </div>
                 </div>
               </td>

@@ -17,7 +17,7 @@ module.exports = {
 
           "primary": "#EFF3F8", //fondo
           "secondary": "#ffffff",//cards
-          "accent": "#6366F1", //icons
+          "accent": "#00000", //icons
           "neutral": "#302037", //font
           "base-100": "#ffffff",//white
           "base-200": "#B4B6BA", //soncondary font

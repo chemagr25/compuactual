@@ -20,6 +20,8 @@ const idTechnician = ref<string>()
 const price = ref<string>()
 const observation = ref<string>('observacion del servicio')
 
+const serviceById = ref<Service>()
+
 export const useService = () => {
   const hasError = ref<boolean>(false)
   const isLoading = ref<boolean>(false)
@@ -81,6 +83,22 @@ export const useService = () => {
     }
   }
 
+  const getServiceById = async (id: string | string[]) => {
+    isLoading.value = true
+    try {
+      const { data } = await apiResources.get<Service>(`/services/${id}`, {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token_auth')
+        }
+      })
+
+      serviceById.value = data
+      isLoading.value = false
+    } catch {
+      isLoading.value = false
+    }
+  }
+
   return {
     services,
     getAllServices,
@@ -100,6 +118,8 @@ export const useService = () => {
     price,
     observation,
     createService,
-    hasError
+    hasError,
+    getServiceById,
+    serviceById
   }
 }
