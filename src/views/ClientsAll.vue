@@ -1,9 +1,7 @@
 <script setup lang="ts">
-import ClientsTable from '@/components/ClientsTable.vue';
-
-
+import ClientsTable from '@/components/ClientsTable.vue'
 </script>
 
 <template>
-<ClientsTable></ClientsTable>
+  <ClientsTable></ClientsTable>
 </template>

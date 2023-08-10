@@ -16,9 +16,10 @@ const phone = ref<string>('')
 const password = ref<string>('')
 const totalPages = ref<number>(0)
 
+const techById = ref<Technician>()
+
 export const useTech = () => {
   const isLoading = ref<boolean>(false)
- 
 
   const getAllTechs = async () => {
     isLoading.value = true
@@ -69,6 +70,22 @@ export const useTech = () => {
     }
   }
 
+  const getTechById = async (id: string | string[]) => {
+    isLoading.value = true
+    try {
+      const { data } = await apiResources.get<Technician>(`technicians/${id}`, {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token_auth')
+        }
+      })
+
+      techById.value = data
+      isLoading.value = false
+    } catch {
+      isLoading.value = false
+    }
+  }
+
   return {
     page,
     totalPages,
@@ -82,6 +99,8 @@ export const useTech = () => {
     lastName,
     phone,
     password,
-    createTech
+    createTech,
+    getTechById,
+    techById
   }
 }

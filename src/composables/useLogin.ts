@@ -1,5 +1,5 @@
 import { apiAuth } from '@/api/apiAuth'
-import {  ref } from 'vue'
+import { ref } from 'vue'
 import { showToast } from '@/helpers/showToast'
 import type { Login } from '@/interfaces/login'
 // import type { VueCookies } from 'vue-cookies'
@@ -11,9 +11,8 @@ const hasError = ref<boolean>()
 // const $cookies = inject<VueCookies>('$cookies');
 
 export const useLogin = () => {
-
   const sendLogin = async () => {
-    if(!username.value || !password.value) return showToast('Error', 'Llena todos los campos')
+    if (!username.value || !password.value) return showToast('Error', 'Llena todos los campos')
     isLoading.value = true
     try {
       const { data } = await apiAuth.post<Login>('/login', {

@@ -15,8 +15,9 @@ const totalPages = ref<number>(0)
 const page = ref<number>(0)
 const hasError = ref<boolean>(false)
 
-export const useClient = () => {
+const clientById = ref<Client>()
 
+export const useClient = () => {
   const isLoading = ref<boolean>(false)
 
   const getAllClients = async () => {
@@ -48,7 +49,7 @@ export const useClient = () => {
           username: capitalize(username.value),
           email: email.value.toLowerCase(),
           name: capitalize(name.value),
-          lastName:capitalize(lastName.value) ,
+          lastName: capitalize(lastName.value),
           phone: phone.value
         },
         {
@@ -60,12 +61,25 @@ export const useClient = () => {
       isLoading.value = false
       await getAllClients()
       showToast('Éxito', 'Cliente creado', 'success')
-      
     } catch {
       isLoading.value = false
       showToast('Error', 'Ocurrió un error, inténtelo nuevamente')
       hasError.value = true
+    }
+  }
 
+  const getClientById = async (id: string | string[]) => {
+    isLoading.value = true
+    try {
+      const { data } = await apiResources.get<Client>(`/clients/${id}`, {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token_auth')
+        }
+      })
+      clientById.value = data
+      isLoading.value = false
+    } catch {
+      isLoading.value = false
     }
   }
 
@@ -81,6 +95,8 @@ export const useClient = () => {
     isLoading,
     totalPages,
     page,
-    hasError
+    hasError,
+    getClientById,
+    clientById
   }
 }

@@ -71,14 +71,13 @@ export const useService = () => {
         }
       )
 
-      
       await getAllServices()
       isLoading.value = false
       showToast('Éxito', 'Servicio creado correctamente', 'success')
     } catch {
       showToast('Error', 'Revisa los datos e inténtalo nuevamente')
       isLoading.value = false
-     hasError.value = true
+      hasError.value = true
     }
   }
 

@@ -10,10 +10,7 @@ import AdminLayout from '@/layouts/AdminLayout.vue'
 
 import CardDetailsVue from '@/components/CardDetails.vue'
 import ClientsDetails from '@/views/ClientsDetails.vue'
-
-// 2. Define some routes
-// Each route should map to a component.
-// We'll talk about nested routes later.
+import TechsDetails from '@/views/TechsDetails.vue'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -33,12 +30,12 @@ const router = createRouter({
     },
 
     //* admin-routes
-    
+
     {
       path: '/admin',
       name: 'root-admin',
       component: AdminLayout,
-      redirect: () => ({name: 'all-services'}),
+      redirect: () => ({ name: 'all-services' }),
       children: [
         {
           path: 'servicios',
@@ -60,6 +57,11 @@ const router = createRouter({
           name: 'all-techs',
           component: TechsAll
         },
+        {
+          path: 'tecnicos/:id',
+          name: 'tech-details',
+          component: TechsDetails
+        }
       ]
     }
   ]

@@ -10,7 +10,4 @@ export const setColor = (status: string) => {
   if (status.toLocaleLowerCase() === 'completado') return 'bg-success/20 text-success'
   if (status.toLocaleLowerCase() === 'entregado') return 'bg-success/20 text-success'
   if (status.toLocaleLowerCase() === 'cancelado') return 'bg-error/20 text-error'
-
-
 }
-

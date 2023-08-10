@@ -1,13 +1,9 @@
-
 <script setup lang="ts">
-import ServicesTable from '@/components/ServicesTable.vue';
-
+import ServicesTable from '@/components/ServicesTable.vue'
 </script>
 
 <template>
-  <ServicesTable/>
+  <ServicesTable />
 </template>
 
-
-<style  scoped></style>
-
+<style scoped></style>

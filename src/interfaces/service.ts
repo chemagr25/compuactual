@@ -35,10 +35,9 @@ export interface Person {
 }
 
 export interface Device {
-    id: number;
-    brand: string;
-    model: string;
-
+  id: number
+  brand: string
+  model: string
 }
 
 export interface Pageable {

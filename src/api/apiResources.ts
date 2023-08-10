@@ -1,6 +1,5 @@
-import axios from "axios";
+import axios from 'axios'
 
-export const apiResources = axios.create( {
-    baseURL: 'https://compuactualca.azurewebsites.net/api'
+export const apiResources = axios.create({
+  baseURL: 'https://compuactualca.azurewebsites.net/api'
 })
-

@@ -1,6 +1,5 @@
-import axios from "axios";
+import axios from 'axios'
 
-export const apiAuth = axios.create( {
-    baseURL: 'https://compuactualca.azurewebsites.net/auth'
+export const apiAuth = axios.create({
+  baseURL: 'https://compuactualca.azurewebsites.net/auth'
 })
-
