@@ -4,12 +4,14 @@ import { useRoute } from 'vue-router'
 import { useService } from '@/composables/useService'
 import Loader from '@/components/Loader.vue'
 import RatingComponent from '@/components/RatingComponent.vue'
+import { PhotoIcon } from '@heroicons/vue/24/outline'
 
 import { capitalize, setColor } from '@/helpers/capitalizestr'
-
-const { isLoading, getServiceById, service, editStatus } = useService()
+const formComment = ref<HTMLFormElement>()
+const { isLoading, getServiceById, service, editStatus, sendMessage, commentText, photoComment } = useService()
 
 const id = ref<string | string[]>(useRoute().params.id)
+const user = ref(localStorage.getItem('uid'))
 
 const status = [
   { name: 'recibido', desc: 'RECIBIDO' },
@@ -21,8 +23,18 @@ const status = [
   { name: 'cancelado', desc: 'CANCELADO' }
 ]
 
+
+
+
+const  uploadImage  =(e: any)=>  {
+      let img = e.target.files[0]
+      photoComment.value = img
+    }
+
 onMounted(() => {
   getServiceById(id.value)
+  
+
 })
 </script>
 
@@ -98,44 +110,45 @@ onMounted(() => {
           <div class="flex items-center">Partes ></div>
           <div class="flex justify-center flex-col items-center">
             <!-- Open the modal using ID.showModal() method -->
-            <button class="btn btn-accent text-white" onclick="my_modal_2.showModal()">Ver mensajes</button>
+            <button class="btn btn-accent text-white" onclick="my_modal_2.showModal()">
+              Ver mensajes
+            </button>
             <dialog id="my_modal_2" class="modal">
               <form method="dialog" class="modal-box bg-secondary border border-base-300 overflow-auto max-h-80">
                 <div v-for="comment in service?.comments" :key="comment.id" class="chat chat-start">
                   <div class="chat-header">
-                    {{comment.user.name}}
+                    {{ comment.user.name }}
                     <time class="text-xs opacity-50">2 hours ago</time>
                   </div>
-                  <div class="chat-bubble bg-primary text-neutral mt-1">{{comment.comment}}</div>
+                  <div class="chat-bubble bg-primary text-neutral mt-1">
+                    <p>{{ comment.comment }}</p>
+                    <div class="geeks">
+                      <img v-if="comment.photoUrl" :src="comment.photoUrl" class="w-64  my-2 rounded " alt="">
+                    </div>
+
+                  </div>
                 </div>
-             
-            
-            
-           
-           
-             
-                <div  class="w-full mt-3 ">
-                  <form>
+
+                <div class="w-full mt-3">
+                  <form @submit.prevent ref="formComment">
                     <label for="chat" class="sr-only">Your message</label>
-                    <div class="flex bg-primary items-center px-3 py-2 rounded-lg ">
+                    <div class="flex bg-primary items-center px-3 py-2 rounded-lg">
                       <button type="button"
                         class="inline-flex justify-center p-2 text-gray-500 rounded-lg cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
-                        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                          viewBox="0 0 20 18">
-                          <path fill="currentColor"
-                            d="M13 5.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0ZM7.565 7.423 4.5 14h11.518l-2.516-3.71L11 13 7.565 7.423Z" />
-                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M18 1H2a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z" />
-                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M13 5.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0ZM7.565 7.423 4.5 14h11.518l-2.516-3.71L11 13 7.565 7.423Z" />
-                        </svg>
+                        <div class="image-upload">
+                          <label for="file-input" class="cursor-pointer">
+                            <PhotoIcon class="w-5"></PhotoIcon>
+                          </label>
+
+                          <input @change="uploadImage"  id="file-input" type="file" class="hidden" />
+                        </div>
                         <span class="sr-only">Upload image</span>
                       </button>
-                    
-                      <textarea id="chat" rows="1"
+
+                      <textarea id="chat" rows="1" v-model="commentText"
                         class="block mx-4 p-2.5 w-full text-base bg-primary text-neutral placeholder:text-neutral focus:outline-none border-base-300 border rounded-lg resize-none"
                         placeholder="Escribe tu mensaje"></textarea>
-                      <button type="submit"
+                      <button  @click="sendMessage(id, 4 )"
                         class="inline-flex justify-center p-2 text-accent rounded-full cursor-pointer hover:bg-blue-100">
                         <svg class="w-5 h-5 rotate-90" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                           fill="currentColor" viewBox="0 0 18 20">
@@ -146,8 +159,6 @@ onMounted(() => {
                       </button>
                     </div>
                   </form>
-
-
                 </div>
               </form>
 
@@ -155,14 +166,15 @@ onMounted(() => {
                 <button>close</button>
               </form>
             </dialog>
-        </div>
-        <div class="flex justify-end items-end">
-          <RatingComponent></RatingComponent>
+          </div>
+          <div class="flex justify-end items-end">
+            <RatingComponent></RatingComponent>
+          </div>
         </div>
       </div>
     </div>
+    <div class="h-40"></div>
   </div>
-  <div class="h-40"></div>
-</div></template>
+</template>
 
 <style scoped></style>

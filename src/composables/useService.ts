@@ -4,6 +4,7 @@ import type { Service, ServiceResponse } from '@/interfaces/service'
 
 import { ref } from 'vue'
 import { useNotification } from '@/composables/useNotificaction'
+import { formToJSON } from 'axios'
 
 const { sendNotification } = useNotification()
 
@@ -27,6 +28,11 @@ const observation = ref<string>('')
 const isLoading = ref<boolean>(false)
 
 const service = ref<Service>()
+
+//comment
+
+const photoComment = ref<any>(null)
+const commentText = ref()
 
 export const useService = () => {
   const hasError = ref<boolean>(false)
@@ -120,14 +126,43 @@ export const useService = () => {
       showToast('Éxito', 'Se actualizó correctamente', 'success')
       sendNotification(
         `Su servicio ${service.value?.invoice.split('-').join('')} se ha actualizado`,
-        `su servicio cambio a ${newStatus}`, 1+''
-        
+        `su servicio cambio a ${newStatus}`,
+        `${service.value?.client.id}`
+      )
+    } catch {
+      showToast('Error', 'Ocurrió un error, inténtalo nuevamente')
+    }
+  }
+
+  const sendMessage = async (idService: any, idUser: any) => {
+    if (commentText.value.length < 1) return
+
+    const form = new FormData()
+    form.append('photo', photoComment.value)
+    const photoval = form.get('photo')
+
+    try {
+      const { data } = await apiResources.post(
+        `/services/${idService}/addComment/${idUser}`,
+        {
+          photo: photoval,
+          comment: commentText.value
+        },
+        {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token_auth'),
+            'Content-Type': 'multipart/form-data'
+          }
+        }
       )
 
-      // console.log(   `Su servicio ${service.value?.invoice.split('-').join('')} se ha actualizado`,
-      // `su servicio cambio a ${newStatus}`,
-      // token_device)
+      getServiceById(idService)
+      showToast('Éxito', 'Comentario creado correctamente', 'success')
+      console.log(data)
+      commentText.value = ''
+      photoComment.value= null
     } catch (e) {
+      showToast('Error', 'ocurrió un error, inténtalo nuevamente')
       console.log(e)
     }
   }
@@ -154,6 +189,9 @@ export const useService = () => {
     hasError,
     getServiceById,
     service,
-    editStatus
+    editStatus,
+    sendMessage,
+    photoComment,
+    commentText
   }
 }

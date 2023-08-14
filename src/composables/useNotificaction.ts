@@ -6,8 +6,7 @@ export const useNotification = () => {
       `services/notify/${idUser}`,
       {
         title,
-        body,
-    
+        body
       },
       {
         headers: {

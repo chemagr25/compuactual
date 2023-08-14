@@ -20,8 +20,9 @@ export const useLogin = () => {
         password: password.value
       })
       localStorage.setItem('token_auth', data.token)
+      localStorage.setItem('uid', data.id+'')
 
-      // $cookies?.set('token', data.token)
+   
       showToast('Exito', 'pásele', 'success')
 
       isLoading.value = false
