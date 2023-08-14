@@ -17,7 +17,7 @@ module.exports = {
 
           "primary": "#EFF3F8", //fondo
           "secondary": "#ffffff",//cards
-          "accent": "#00000", //icons
+          "accent": "#1A2B79", //icons
           "neutral": "#302037", //font
           "base-100": "#ffffff",//white
           "base-200": "#B4B6BA", //soncondary font
@@ -36,7 +36,7 @@ module.exports = {
           //dfe0e3
           "primary": "#040D19",//background
           "secondary": "#071426",//cards
-          "accent": "#A5B4FC",//iconos
+          "accent": "#1A2B79",//iconos
           "neutral": "#ffffff", //fuente
           "neutral-content": "#dfe0e3 ",//logo
           "base-100": "#ffffff",//blanco
@@ -46,7 +46,8 @@ module.exports = {
           "info": "#3abff8",
           "success": "#36d399",
           "warning": "#fbbd23",
-          "error": "#f87272",        },
+          "error": "#f87272",
+           },
       },
     ],
   }

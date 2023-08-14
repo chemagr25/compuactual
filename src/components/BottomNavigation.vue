@@ -16,7 +16,7 @@ const props = defineProps<{
           class="flex p-2 text-gray-500 justify-center items-center rounded-full flex-col"
           :to="{ name: item.name }"
         >
-          <component class="w-5" :is="item.icon.name"></component>
+          <component class="w-6" :is="item.icon.name"></component>
           <p>{{ item.title }}</p>
         </router-link>
       </div>

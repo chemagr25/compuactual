@@ -1,30 +1,36 @@
 import { apiResources } from '@/api/apiResources'
 import { showToast } from '@/helpers/showToast'
 import type { Service, ServiceResponse } from '@/interfaces/service'
+
 import { ref } from 'vue'
+import { useNotification } from '@/composables/useNotificaction'
+import { token_device } from '@/config/keys'
+
+const { sendNotification } = useNotification()
 
 const services = ref<Service[]>([])
 const totalPages = ref<number>(0)
 const page = ref<number>(0)
 //data for create service
 const brand = ref<string>()
+
 const model = ref<string>()
 const serialNumber = ref<string>()
 const processor = ref<string>()
 const ram = ref<string>()
 const storage = ref<string>()
-const observations = ref<string>()
+const observations = ref<string>('')
 const description = ref<string>()
 const idClient = ref<string>()
 const idTechnician = ref<string>()
 const price = ref<string>()
-const observation = ref<string>('observacion del servicio')
+const observation = ref<string>('')
+const isLoading = ref<boolean>(false)
 
-const serviceById = ref<Service>()
+const service = ref<Service>()
 
 export const useService = () => {
   const hasError = ref<boolean>(false)
-  const isLoading = ref<boolean>(false)
   const getAllServices = async () => {
     isLoading.value = true
     try {
@@ -83,7 +89,7 @@ export const useService = () => {
     }
   }
 
-  const getServiceById = async (id: string | string[]) => {
+  const getServiceById = async (id: string | number | string[]) => {
     isLoading.value = true
     try {
       const { data } = await apiResources.get<Service>(`/services/${id}`, {
@@ -92,10 +98,37 @@ export const useService = () => {
         }
       })
 
-      serviceById.value = data
+      service.value = data
       isLoading.value = false
     } catch {
       isLoading.value = false
+    }
+  }
+
+  const editStatus = async (newStatus: string, id: number = 0) => {
+    try {
+      const { data } = await apiResources.patch(
+        `/services/${id}`,
+        { status: newStatus },
+        {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem('token_auth')
+          }
+        }
+      )
+
+      getServiceById(id)
+      sendNotification(
+        `Su servicio ${service.value?.invoice.split('-').join('')} se ha actualizado`,
+        `su servicio cambio a ${newStatus}`,
+        token_device
+      )
+
+      console.log(   `Su servicio ${service.value?.invoice.split('-').join('')} se ha actualizado`,
+      `su servicio cambio a ${newStatus}`,
+      token_device)
+    } catch (e) {
+      console.log(e)
     }
   }
 
@@ -120,6 +153,7 @@ export const useService = () => {
     createService,
     hasError,
     getServiceById,
-    serviceById
+    service,
+    editStatus
   }
 }

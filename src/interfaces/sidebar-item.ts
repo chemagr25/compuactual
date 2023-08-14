@@ -5,7 +5,6 @@ export interface icon {
 }
 
 interface visible {
-  admin: boolean
   client: boolean
   tech: boolean
   aside: boolean

@@ -17,7 +17,7 @@ onMounted(() => {
   <div v-if="isLoading" class="w-full overflow-hidden flex justify-center">
     <Loader></Loader>
   </div>
-  <div v-else>
+  <div>
     <p class="text-neutral">{{ clientById }}</p>
   </div>
 </template>

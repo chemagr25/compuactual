@@ -12,7 +12,7 @@ const {
   processor,
   ram,
   storage,
-  observations,
+  observation,
   description,
   price,
   createService,
@@ -152,7 +152,7 @@ const sendService = () => {
                           <textarea
                             type="text"
                             placeholder="Observaciones"
-                            v-model="observations"
+                            v-model="observation"
                             class="input border pt-2 border-base-300 h-16 resize-none focus:outline-none w-full bg-primary"
                           />
                         </div>

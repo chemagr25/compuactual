@@ -1,5 +1,5 @@
-export const capitalize = (str: string) => {
-  return str.replace(/\w\S*/g, (w) => w.toLowerCase().replace(/^\w/, (c) => c.toUpperCase()))
+export const capitalize = (str: string = '') => {
+  return str?.replace(/\w\S*/g, (w) => w.toLowerCase().replace(/^\w/, (c) => c.toUpperCase()))
 }
 
 export const setColor = (status: string) => {
