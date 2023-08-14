@@ -2,6 +2,7 @@ import { apiAuth } from '@/api/apiAuth'
 import { ref } from 'vue'
 import { showToast } from '@/helpers/showToast'
 import type { Login } from '@/interfaces/login'
+import router from '@/router'
 // import type { VueCookies } from 'vue-cookies'
 
 const username = ref<string>()
@@ -21,9 +22,10 @@ export const useLogin = () => {
       })
       localStorage.setItem('token_auth', data.token)
       localStorage.setItem('uid', data.id+'')
+      localStorage.setItem('role',data.roles[0] )
 
    
-      showToast('Exito', 'pásele', 'success')
+      router.push({name: 'all-services'})
 
       isLoading.value = false
     } catch (error) {

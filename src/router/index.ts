@@ -6,6 +6,7 @@ import ServicesAll from '@/views/ServicesAll.vue'
 import TechsAll from '@/views/TechsAll.vue'
 import ClientsAll from '@/views/ClientsAll.vue'
 import AdminLayout from '@/layouts/AdminLayout.vue'
+import TechLayout from '@/layouts/TechLayout.vue'
 
 // import CardDetailsVue from '@/components/CardDetails.vue'
 import ClientsDetails from '@/views/ClientsDetails.vue'
@@ -38,36 +39,41 @@ const router = createRouter({
       redirect: () => ({ name: 'all-services' }),
       children: [
         {
-          path: 'servicios',
+          path: '/servicios',
           name: 'all-services',
           component: ServicesAll
         },
         {
-          path: 'servicios/:id',
+          path: '/servicios/:id',
           name: 'services-details',
           component: ServicesDetails
         },
         {
-          path: 'clientes',
+          path: '/clientes',
           name: 'all-clients',
           component: ClientsAll
         },
         {
-          path: 'clientes/:id',
+          path: '/clientes/:id',
           name: 'clients-details',
           component: ClientsDetails
         },
         {
-          path: 'tecnicos',
+          path: '/tecnicos',
           name: 'all-techs',
           component: TechsAll
         },
         {
-          path: 'tecnicos/:id',
+          path: '/tecnicos/:id',
           name: 'tech-details',
           component: TechsDetails
         }
       ]
+    },
+    {
+      path: '/tecnico',
+      name: 'root-tech',
+      component: TechLayout
     }
   ]
 })

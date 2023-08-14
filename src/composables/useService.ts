@@ -5,6 +5,7 @@ import type { Service, ServiceResponse } from '@/interfaces/service'
 import { ref } from 'vue'
 import { useNotification } from '@/composables/useNotificaction'
 import { formToJSON } from 'axios'
+import router from '@/router'
 
 const { sendNotification } = useNotification()
 
@@ -52,6 +53,10 @@ export const useService = () => {
       totalPages.value = data.totalPages
     } catch {
       isLoading.value = false
+      localStorage.removeItem('token_auth')
+      localStorage.removeItem('uid')
+      localStorage.removeItem('role')
+      router.push({name: 'login'})
     }
   }
 
