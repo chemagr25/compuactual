@@ -4,7 +4,6 @@ import type { Service, ServiceResponse } from '@/interfaces/service'
 
 import { ref } from 'vue'
 import { useNotification } from '@/composables/useNotificaction'
-import { token_device } from '@/config/keys'
 
 const { sendNotification } = useNotification()
 
@@ -107,7 +106,7 @@ export const useService = () => {
 
   const editStatus = async (newStatus: string, id: number = 0) => {
     try {
-      const { data } = await apiResources.patch(
+      await apiResources.patch(
         `/services/${id}`,
         { status: newStatus },
         {
@@ -118,15 +117,16 @@ export const useService = () => {
       )
 
       getServiceById(id)
+      showToast('Éxito', 'Se actualizó correctamente', 'success')
       sendNotification(
         `Su servicio ${service.value?.invoice.split('-').join('')} se ha actualizado`,
-        `su servicio cambio a ${newStatus}`,
-        token_device
+        `su servicio cambio a ${newStatus}`, 1+''
+        
       )
 
-      console.log(   `Su servicio ${service.value?.invoice.split('-').join('')} se ha actualizado`,
-      `su servicio cambio a ${newStatus}`,
-      token_device)
+      // console.log(   `Su servicio ${service.value?.invoice.split('-').join('')} se ha actualizado`,
+      // `su servicio cambio a ${newStatus}`,
+      // token_device)
     } catch (e) {
       console.log(e)
     }

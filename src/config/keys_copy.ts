@@ -1,1 +1,0 @@
-export const token_device = "your_token_device"
