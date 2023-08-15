@@ -4,9 +4,16 @@ import { sidebarActions } from '@/shared/sidebarActions'
 import ChangeTheme from '@/components/ChangeTheme.vue'
 
 import BottomNavigation from '@/components/BottomNavigation.vue'
-import { apiResources } from '@/api/apiResources'
+import router from '@/router'
 
 const isTech = ref(localStorage.getItem('role') === 'ROLE_TECHNICIAN')
+
+const logout = () => {
+  localStorage.removeItem('token_auth')
+  localStorage.removeItem('role')
+  localStorage.removeItem('uid')
+  router.push({ name: 'login' })
+}
 
 console.log(isTech.value)
 const showSideMobile = ref<boolean>(false)
@@ -74,7 +81,7 @@ const showSideMobile = ref<boolean>(false)
                   <li class="hover:bg-primary py-1 px-2 rounded cursor-pointer">
                     <a>Cambiar contraseña</a>
                   </li>
-                  <li class="hover:bg-primary py-1 px-2 rounded"><a>Cerrar sesión</a></li>
+                  <li @click="logout" class="hover:bg-primary cursor-pointer py-1 px-2 rounded "><a>Cerrar sesión</a></li>
                 </ul>
               </div>
             </div>

@@ -15,7 +15,7 @@ export const useNotification = () => {
       }
     )
 
-    console.log(data)
+ 
   }
 
   return {

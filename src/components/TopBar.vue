@@ -9,9 +9,9 @@ import ChangeTheme from '@/components/ChangeTheme.vue'
 const mobileMenuOpen = ref<boolean>(false)
 
 const logout = () => {
-  localStorage.removeItem('token')
+  localStorage.removeItem('token_auth')
   localStorage.removeItem('role')
-  localStorage.removeItem('id')
+  localStorage.removeItem('uid')
 
   router.push({ name: 'auth' })
 }

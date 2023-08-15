@@ -164,9 +164,11 @@ export const useService = () => {
 
       getServiceById(idService)
       showToast('Éxito', 'Comentario creado correctamente', 'success')
-      console.log(data)
+      
       commentText.value = ''
       photoComment.value = null
+
+      await sendNotification('Nuevo comentario', `Se agregó un nuevo comentario a su servicio ${service.value?.invoice.split('-').join('')} `,15+''  )
     } catch (e) {
       showToast('Error', photoComment.value + '')
     }

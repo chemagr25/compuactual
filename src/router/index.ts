@@ -12,7 +12,8 @@ import ClientsDetails from '@/views/ClientsDetails.vue'
 import TechsDetails from '@/views/TechsDetails.vue'
 import ServicesDetails from '@/views/ServicesDetails.vue'
 
-import { UserGuard } from '@/router/auth-guards'
+import { UserGuard, LoginGuard, pivot } from '@/router/auth-guards'
+
 import HomeVue from '@/views/Home.vue'
 
 const router = createRouter({
@@ -26,6 +27,7 @@ const router = createRouter({
       children: [
         {
           path: 'login',
+          beforeEnter: [LoginGuard],
           name: 'login',
           component: Login
         }
@@ -34,7 +36,7 @@ const router = createRouter({
     {
       path: '/pivot',
       name: 'pivot',
-      beforeEnter: [UserGuard],
+      beforeEnter: [pivot],
       component: HomeVue
     },
     {
@@ -49,22 +51,26 @@ const router = createRouter({
     {
       path: '/admin',
       name: 'root-admin',
+      beforeEnter: [UserGuard],
       component: AdminLayout,
       redirect: () => ({ name: 'all-services' }),
       children: [
         {
           path: '/servicios',
           name: 'all-services',
+          beforeEnter: [UserGuard],
           component: ServicesAll
         },
         {
           path: '/servicios/:id',
           name: 'services-details',
+          beforeEnter: [UserGuard],
           component: ServicesDetails
         },
         {
           path: '/clientes',
           name: 'all-clients',
+          beforeEnter: [UserGuard],
           component: ClientsAll
         },
         {
@@ -75,6 +81,7 @@ const router = createRouter({
         {
           path: '/tecnicos',
           name: 'all-techs',
+          beforeEnter: [UserGuard],
           component: TechsAll
         },
         {

@@ -20,6 +20,7 @@ const selectClient = (id: number, name: string, lastName: string) => {
 }
 
 watch(enterName, async (newValue) => {
+  isLoading.value = true
   if (newValue.length <= 3) return (matchTechs.value = [])
 
   try {
@@ -30,7 +31,7 @@ watch(enterName, async (newValue) => {
     })
 
     matchTechs.value = data
-    console.log(matchTechs.value)
+    isLoading.value = false
   } catch {}
 })
 </script>
