@@ -20,23 +20,21 @@ const logout = () => {
     localStorage.removeItem('token_auth')
     localStorage.removeItem('role')
     localStorage.removeItem('uid')
+    localStorage.removeItem('role_id')
 
     router.push({ name: 'login' })
 }
 
+const roleId = ref(localStorage.getItem('role_id'))
+
 onMounted(async () => {
-    await getClientById('3')
+    await getClientById(roleId.value+'')
     clientById.value?.services.map(async (e) => {
         await getServiceById(e.id)
         services.value.push(service.value)
     })
 
 })
-
-
-
-
-
 
 
 </script>
@@ -92,8 +90,8 @@ onMounted(async () => {
 
     <div class=" mt-12 pl-8 w-full h-full">
         <p class="text-neutral text-2xl mb-5 font-bold"> Bienvenido {{ clientById?.name }}</p>
-        <div class="  flex  gap-5   ">
-            <div class="text-neutral py-2 px-4 min-w-[18rem] rounded-lg flex flex-col shadow-lg bg-secondary "
+        <div class="  flex  flex-wrap justify-center gap-5   ">
+            <div v-if="services.length > 0" class="text-neutral py-2 px-4 min-w-[18rem] rounded-lg flex flex-col shadow-lg bg-secondary "
                 v-for="item in services">
                 <div class="flex justify-between ">
                     <p>{{ item.dateReceived }}</p>
@@ -112,17 +110,11 @@ onMounted(async () => {
                     <p>Técnico: </p>
                     <p class="font-bold">{{ item.technician.name }} {{ item.technician.lastName }}</p>
                 </div>
+            </div>
 
-
-                <!-- <div class="flex  gap-8">
-                    <p class="text-neutral"> {{ service?.dateReceived }} </p>
-                    <span class="rounded-xl  px-1.5" :class="setColor(item.status.toLowerCase())">{{ capitalize(item?.status)
-                    }}</span>
-                </div>
-                <p>{{ item?.invoice.split('-').join('') }}</p>
-                <p>{{ item.device.brand }} {{ item.device.model }}</p> -->
-
-
+            <div class="w-full " v-else>
+                <p  class="text-neutral text-2xl text-center font-bold">No hay Servicios</p>
+                
             </div>
 
         </div>

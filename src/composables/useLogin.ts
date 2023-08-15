@@ -39,6 +39,11 @@ export const useLogin = () => {
       localStorage.setItem('token_auth', data.token)
       localStorage.setItem('uid', data.id + '')
       localStorage.setItem('role', data.roles[0])
+      if (localStorage.getItem('role') == 'ROLE_TECHNICIAN') {
+        localStorage.setItem('role_id', data.technicianId + '')
+      } else if (localStorage.getItem('role') == 'ROLE_USER') {
+        localStorage.setItem('role_id', data.clientId + '')
+      }
 
       router.push({ name: 'pivot' })
 

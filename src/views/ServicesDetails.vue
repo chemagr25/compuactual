@@ -117,10 +117,8 @@ onMounted(() => {
         </div>
       </div>
       <div class="w-full h-full mt-11 flex flex-col">
-        <div class="grid grid-cols-3">
-          <div class="flex items-center">Partes ></div>
-          <div class="flex justify-center flex-col items-center">
-            <!-- Open the modal using ID.showModal() method -->
+        <div class="flex justify-between items-center  ">
+          <div class="flex justify-center  flex-col items-center">
             <button class="btn btn-accent text-white" onclick="my_modal_2.showModal()">
               Ver mensajes
             </button>

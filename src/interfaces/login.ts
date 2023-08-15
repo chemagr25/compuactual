@@ -5,4 +5,7 @@ export interface Login {
   type: string
   token: string
   roles: string[]
+  clientId: number | null
+  technicianId: number | null
 }
+

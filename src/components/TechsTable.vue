@@ -50,7 +50,7 @@ onMounted(async () => {
           </thead>
           <tbody>
             <tr v-for="tech of technicians">
-              <th>{{ tech.id }} {{ tech.name }} {{ tech.lastName }}</th>
+              <th>{{ tech.name }} {{ tech.lastName }}</th>
               <th>{{ tech.username }}</th>
               <th>{{ tech.email }}</th>
               <th>{{ tech.phone }}</th>
