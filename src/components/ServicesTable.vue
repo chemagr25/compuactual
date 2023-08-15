@@ -53,7 +53,7 @@ onMounted(async () => {
           </thead>
           <tbody>
             <tr v-for="service of services" class="mb-none">
-              <th>{{ service.id }} {{ service.invoice.split('-').join('') }}</th>
+              <th> {{ service.invoice.split('-').join('') }}</th>
               <td>{{ service.dateReceived }}</td>
               <td>{{ service.client.name }} {{ service.client.lastName }}</td>
               <td>{{ service.device.brand }} {{ service.device.model }}</td>
