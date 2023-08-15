@@ -33,12 +33,12 @@ const logout = () => {
         </button>
       </div>
       <div class="hidden lg:flex lg:gap-x-12">
-        <div
+        <router-link :to="{name: 'search-service'}"
           class="p-3 items-center text-neutral flex gap-3 rounded-lg hover:bg-primary cursor-pointer"
         >
           <DocumentMagnifyingGlassIcon class="w-7"></DocumentMagnifyingGlassIcon>
           <p class="font-bold">Buscar servicio</p>
-        </div>
+        </router-link>
       </div>
       <div class="hidden lg:flex text-neutral lg:flex-1 lg:justify-end">
         <ChangeTheme></ChangeTheme>

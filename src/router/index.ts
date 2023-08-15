@@ -11,14 +11,17 @@ import UserHome from '@/views/UserHome.vue'
 import ClientsDetails from '@/views/ClientsDetails.vue'
 import TechsDetails from '@/views/TechsDetails.vue'
 import ServicesDetails from '@/views/ServicesDetails.vue'
+import SearchServide from '@/views/SearchService.vue'
 
 import { UserGuard, LoginGuard, pivot } from '@/router/auth-guards'
 
 import HomeVue from '@/views/Home.vue'
+import SearchService from '@/views/SearchService.vue'
 
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [
+
     {
       path: '/',
       name: 'root',
@@ -30,9 +33,16 @@ const router = createRouter({
           beforeEnter: [LoginGuard],
           name: 'login',
           component: Login
-        }
+        },
+        {
+          path: '/buscar-servicio',
+          name: 'search-service',
+          component: SearchService
+    
+        },
       ]
     },
+   
     {
       path: '/pivot',
       name: 'pivot',

@@ -26,10 +26,5 @@ export const sidebarActions: SideBarItem[] = [
     visible: { client: false, tech: false, aside: true }
   },
 
-  {
-    name: 'all-clients',
-    title: 'Perfil',
-    icon: { name: UserCircleIcon },
-    visible: { client: true, tech: true, aside: false }
-  }
+
 ]

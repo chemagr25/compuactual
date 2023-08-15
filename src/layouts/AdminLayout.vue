@@ -67,7 +67,7 @@ const showSideMobile = ref<boolean>(false)
                 >
               </div>
             </div>
-            <div class="hidden md:flex gap-8">
+            <div class=" md:flex gap-8">
               <div class="dropdown dropdown-bottom flex dropdown-end">
                 <div tabindex="0" class="avatar">
                   <div class="w-10 cursor-pointer rounded-full">
@@ -84,6 +84,7 @@ const showSideMobile = ref<boolean>(false)
                     <a>Cambiar contraseña</a>
                   </li>
                   <li @click="logout" class="hover:bg-primary cursor-pointer py-1 px-2 rounded "><a>Cerrar sesión</a></li>
+                  <li class="hover:bg-primary cursor-pointer py-1 px-2 rounded "> <ChangeTheme></ChangeTheme></li>
                 </ul>
               </div>
             </div>
@@ -139,7 +140,7 @@ const showSideMobile = ref<boolean>(false)
                   
                   </li>
                 </ul>
-                <ChangeTheme class="mt-auto justify-center"></ChangeTheme>
+                <!-- <ChangeTheme class="mt-auto justify-center"></ChangeTheme> -->
               </div>
             </div>
           </div>
@@ -155,7 +156,7 @@ const showSideMobile = ref<boolean>(false)
       </div>
     </div>
 
-    <BottomNavigation class="md:hidden" :items="sidebarActions"></BottomNavigation>
+    <BottomNavigation  class="md:hidden" :items="sidebarActions"></BottomNavigation>
   </main>
 </template>
 
