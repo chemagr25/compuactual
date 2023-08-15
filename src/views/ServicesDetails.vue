@@ -5,10 +5,11 @@ import { useService } from '@/composables/useService'
 import Loader from '@/components/Loader.vue'
 import RatingComponent from '@/components/RatingComponent.vue'
 import { PhotoIcon } from '@heroicons/vue/24/outline'
+import LoaderButton from '@/components/LoaderButton.vue'
 
 import { capitalize, setColor } from '@/helpers/capitalizestr'
 const formComment = ref<HTMLFormElement>()
-const { isLoading, getServiceById, service, editStatus, sendMessage, commentText, photoComment } =
+const { isLoading, getServiceById, service, editStatus, sendMessage, commentText, photoComment, loadingComment } =
   useService()
 
 const id = ref<string | string[]>(useRoute().params.id)
@@ -172,7 +173,7 @@ onMounted(() => {
                         placeholder="Escribe tu mensaje"
                       ></textarea>
                       <button
-                        @click="sendMessage(id, 4)"
+                        v-if="!loadingComment" @click="sendMessage(id, 4)"
                         class="inline-flex justify-center p-2 text-accent rounded-full cursor-pointer hover:bg-blue-100"
                       >
                         <svg
@@ -188,6 +189,11 @@ onMounted(() => {
                         </svg>
                         <span class="sr-only">Send message</span>
                       </button>
+                      <div v-else>
+                        <LoaderButton></LoaderButton>
+
+                      </div>
+                      
                     </div>
                   </form>
                 </div>

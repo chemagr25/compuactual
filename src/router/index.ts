@@ -51,7 +51,7 @@ const router = createRouter({
     {
       path: '/admin',
       name: 'root-admin',
-      beforeEnter: [UserGuard],
+      // beforeEnter: [UserGuard],
       component: AdminLayout,
       redirect: () => ({ name: 'all-services' }),
       children: [
@@ -64,7 +64,7 @@ const router = createRouter({
         {
           path: '/servicios/:id',
           name: 'services-details',
-          beforeEnter: [UserGuard],
+          // beforeEnter: [UserGuard],
           component: ServicesDetails
         },
         {

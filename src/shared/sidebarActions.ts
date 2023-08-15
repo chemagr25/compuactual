@@ -11,7 +11,7 @@ export const sidebarActions: SideBarItem[] = [
     name: 'all-services',
     title: 'Servicios',
     icon: { name: ClipboardDocumentListIcon },
-    visible: { client: false, tech: true, aside: true }
+    visible: { client: true, tech: true, aside: true }
   },
   {
     name: 'all-clients',

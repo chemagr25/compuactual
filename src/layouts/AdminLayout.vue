@@ -7,6 +7,7 @@ import BottomNavigation from '@/components/BottomNavigation.vue'
 import router from '@/router'
 
 const isTech = ref(localStorage.getItem('role') === 'ROLE_TECHNICIAN')
+const isUser = ref(localStorage.getItem('role') === 'ROLE_USER')
 
 const logout = () => {
   localStorage.removeItem('token_auth')
@@ -76,6 +77,7 @@ const showSideMobile = ref<boolean>(false)
 
                 <ul
                   tabindex="0"
+
                   class="dropdown-content z-[1] p-2 bg-secondary border border-base-300 rounded-lg shadow-xl rounded-box w-52"
                 >
                   <li class="hover:bg-primary py-1 px-2 rounded cursor-pointer">
@@ -98,8 +100,8 @@ const showSideMobile = ref<boolean>(false)
             class="relative flex-1 flex flex-col min-h-0 bg-secondary shadow-2xl text-neutral h-full pt-0"
           >
             <div class="flex-1 flex flex-col pt-[1.3rem] pb-4 overflow-y-auto">
-              <div class="flex-1 pl-2 pr-4 flex flex-col">
-                <ul class="space-y-4 pb-2">
+              <div class="flex-1  pl-2 pr-4 flex flex-col">
+                <ul v-if="!isUser" class="space-y-4 pb-2">
                   <li v-for="item in sidebarActions" :key="item.name">
                     <div v-if="!isTech">
                       <router-link
@@ -122,6 +124,23 @@ const showSideMobile = ref<boolean>(false)
                     </router-link>
                   </li>
                 </ul>
+                <ul v-if="isUser" class="space-y-4  pb-2">
+                  <li v-for="item in sidebarActions" :key="item.name">
+                    <div class="" v-if="!isTech">
+                      <router-link
+                        v-if="item.visible.client && item.visible.aside"
+                        :to="{ name: item.name }"
+                        class="text-lg text-gray font-normal hover:bg-accent/20 rounded-lg flex items-center p-2.5 group"
+                      >
+                        <component :is="item.icon.name" class="w-7"></component>
+                        <span class="ml-3 font-normal">{{ item.title }}</span>
+                      </router-link>
+                    </div>
+                  
+                  </li>
+                </ul>
+                
+                
 
                 <ChangeTheme class="mt-auto justify-center"></ChangeTheme>
               </div>

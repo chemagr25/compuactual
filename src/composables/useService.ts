@@ -27,6 +27,7 @@ const idTechnician = ref<string>()
 const price = ref<string>()
 const observation = ref<string>('')
 const isLoading = ref<boolean>(false)
+const loadingComment = ref<boolean>(false)
 
 const service = ref<Service>()
 
@@ -100,7 +101,7 @@ export const useService = () => {
   }
 
   const getServiceById = async (id: string | number | string[]) => {
-    isLoading.value = true
+    // isLoading.value = true
     try {
       const { data } = await apiResources.get<Service>(`/services/${id}`, {
         headers: {
@@ -141,6 +142,7 @@ export const useService = () => {
 
   const sendMessage = async (idService: any, idUser: any) => {
     // if (commentText.value.length < 1) return
+    loadingComment.value = true
 
     const fd = new FormData()
     fd.append('photo', photoComment.value)
@@ -163,14 +165,15 @@ export const useService = () => {
       )
 
       getServiceById(idService)
-      showToast('Éxito', 'Comentario creado correctamente', 'success')
       
       commentText.value = ''
       photoComment.value = null
+      loadingComment.value = false
 
       await sendNotification('Nuevo comentario', `Se agregó un nuevo comentario a su servicio ${service.value?.invoice.split('-').join('')} `,15+''  )
     } catch (e) {
       showToast('Error', photoComment.value + '')
+     loadingComment.value = false
     }
   }
 
@@ -199,6 +202,7 @@ export const useService = () => {
     editStatus,
     sendMessage,
     photoComment,
-    commentText
+    commentText,
+    loadingComment
   }
 }
