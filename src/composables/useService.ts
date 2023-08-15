@@ -140,7 +140,7 @@ export const useService = () => {
     }
   }
 
-  const sendMessage = async (idService: any, idUser: any) => {
+  const sendMessage = async (idService: any) => {
     // if (commentText.value.length < 1) return
     loadingComment.value = true
 
@@ -150,7 +150,7 @@ export const useService = () => {
 
     try {
       const { data } = await apiResources.post(
-        `/services/${idService}/addComment/41`,
+        `/services/${idService}/addComment/${localStorage.getItem('uid')}`,
 
         {
           photo: photoComment.value,
@@ -170,9 +170,8 @@ export const useService = () => {
       photoComment.value = null
       loadingComment.value = false
 
-      await sendNotification('Nuevo comentario', `Se agregó un nuevo comentario a su servicio ${service.value?.invoice.split('-').join('')} `,15+''  )
+      await sendNotification('Nuevo comentario', `Se agregó un nuevo comentario a su servicio ${service.value?.invoice.split('-').join('')} `,service.value?.client.id+''  )
     } catch (e) {
-      showToast('Error', photoComment.value + '')
      loadingComment.value = false
     }
   }

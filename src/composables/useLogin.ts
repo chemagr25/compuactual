@@ -7,20 +7,21 @@ import router from '@/router'
 import { PushNotifications } from '@capacitor/push-notifications'
 import { apiResources } from '@/api/apiResources'
 
-const username = ref<string>()
-const password = ref<string>()
-const isLoading = ref<boolean>(false)
-const hasError = ref<boolean>()
-const token = ref()
 
 const tokenDevice = ref()
 
 export const useLogin = () => {
+  const username = ref<string>()
+const password = ref<string>()
+const isLoading = ref<boolean>(false)
+const hasError = ref<boolean>()
+const token = ref('')
+
   onMounted(() => {
     PushNotifications.addListener('registration', (tokendevice) => {
       token.value = tokendevice.value
     }).catch((e) => {
-      console.log()
+      console.log(e)
     })
 
     PushNotifications.register().catch((e) => {
@@ -45,6 +46,7 @@ export const useLogin = () => {
         localStorage.setItem('role_id', data.clientId + '')
       }
 
+      password.value = ''
       router.push({ name: 'pivot' })
 
       isLoading.value = false
@@ -62,7 +64,7 @@ export const useLogin = () => {
       await apiResources.post(
         '/clients/saveToken',
         {
-          clientId: localStorage.getItem('uid'),
+          clientId: localStorage.getItem('role_id'),
           tokenDevice: token.value
         },
         {

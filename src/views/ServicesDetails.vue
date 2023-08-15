@@ -127,10 +127,11 @@ onMounted(() => {
                 method="dialog"
                 class="modal-box bg-secondary border border-base-300 overflow-auto max-h-80"
               >
-                <div v-for="comment in service?.comments" :key="comment.id" class="chat chat-start">
+                <div v-for="comment in service?.comments" :key="comment.id" :class="[comment.user.role == 'ROLE_USER' ? 'chat-end' : 'chat-start']" class="chat    ">
                   <div class="chat-header">
+        
                     {{ comment.user.name }}
-                    <time class="text-xs opacity-50">2 hours ago</time>
+                    <time class="text-xs opacity-50">{{comment.dateComment}}</time>
                   </div>
                   <div class="chat-bubble bg-primary text-neutral mt-1">
                     <p>{{ comment.comment }}</p>
@@ -171,7 +172,7 @@ onMounted(() => {
                         placeholder="Escribe tu mensaje"
                       ></textarea>
                       <button
-                        v-if="!loadingComment" @click="sendMessage(id, 4)"
+                        v-if="!loadingComment" @click="sendMessage(id)"
                         class="inline-flex justify-center p-2 text-accent rounded-full cursor-pointer hover:bg-blue-100"
                       >
                         <svg
