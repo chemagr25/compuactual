@@ -56,7 +56,7 @@ export const useService = () => {
       localStorage.removeItem('token_auth')
       localStorage.removeItem('uid')
       localStorage.removeItem('role')
-      router.push({name: 'login'})
+      router.push({ name: 'login' })
     }
   }
 
@@ -131,7 +131,7 @@ export const useService = () => {
       showToast('Éxito', 'Se actualizó correctamente', 'success')
       sendNotification(
         `Su servicio ${service.value?.invoice.split('-').join('')} se ha actualizado`,
-        `su servicio cambio a ${newStatus}`,
+        `Su servicio cambió a ${newStatus}`,
         `${service.value?.client.id}`
       )
     } catch {
@@ -140,17 +140,18 @@ export const useService = () => {
   }
 
   const sendMessage = async (idService: any, idUser: any) => {
-    if (commentText.value.length < 1) return
+    // if (commentText.value.length < 1) return
 
-    const form = new FormData()
-    form.append('photo', photoComment.value)
-    const photoval = form.get('photo')
+    const fd = new FormData()
+    fd.append('photo', photoComment.value)
+    fd.append('comment', commentText.value)
 
     try {
       const { data } = await apiResources.post(
-        `/services/${idService}/addComment/${idUser}`,
+        `/services/${idService}/addComment/41`,
+
         {
-          photo: photoval,
+          photo: photoComment.value,
           comment: commentText.value
         },
         {
@@ -165,10 +166,9 @@ export const useService = () => {
       showToast('Éxito', 'Comentario creado correctamente', 'success')
       console.log(data)
       commentText.value = ''
-      photoComment.value= null
+      photoComment.value = null
     } catch (e) {
-      showToast('Error', 'ocurrió un error, inténtalo nuevamente')
-      console.log(e)
+      showToast('Error', photoComment.value + '')
     }
   }
 

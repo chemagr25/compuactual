@@ -89,9 +89,9 @@ const showSideMobile = ref<boolean>(false)
             <div class="flex-1 flex flex-col pt-[1.3rem] pb-4 overflow-y-auto">
               <div class="flex-1 pl-2 pr-4 flex flex-col">
                 <ul class="space-y-4 pb-2">
-                  <li v-for="item in sidebarActions" :key="item.name" >
-                    <router-link 
-                    v-if="item.visible.aside && item.visible.tech"
+                  <li v-for="item in sidebarActions" :key="item.name">
+                    <router-link
+                      v-if="item.visible.aside && item.visible.tech"
                       :to="{ name: item.name }"
                       class="text-lg text-gray font-normal hover:bg-accent/20 rounded-lg flex items-center p-2.5 group"
                     >

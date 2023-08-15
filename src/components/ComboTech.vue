@@ -19,16 +19,19 @@ const selectClient = (id: number, name: string, lastName: string) => {
 }
 
 watch(enterName, async (newValue) => {
-  if (newValue.length <= 2) return (matchClients.value = [])
+  if (newValue.length <= 3) return (matchClients.value = [])
 
   isLoading.value = true
   try {
-    if (newValue.length <= 2) return
-    const { data } = await apiResources.get<Person[]>(`/technicians/search?query=${newValue}`, {
-      headers: {
-        Authorization: 'Bearer ' + localStorage.getItem('token_auth')
+    if (newValue.length <= 3) return
+    const { data } = await apiResources.get<Person[]>(
+      `/technicians/autocomplete?query=${newValue}`,
+      {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token_auth')
+        }
       }
-    })
+    )
 
     matchClients.value = data
     isLoading.value = false
@@ -48,13 +51,13 @@ watch(enterName, async (newValue) => {
 
   <div
     v-if="matchClients.length > 0 || isLoading"
-    class="absolute mt-1 p-1 max-h-20 w-40 lg:w-56 md:w-52 ml-1 overflow-auto rounded-md bg-primary py-1 text-base shadow-lg focus:outline-none sm:text-sm border border-base-300"
+    class="mt-1 p-1 max-h-20 w-full ml-1 overflow-auto rounded-md bg-primary py-1 text-base shadow-lg focus:outline-none sm:text-sm border border-base-300"
   >
     <p
       v-if="!isLoading"
       v-for="client in matchClients"
       @click="selectClient(client.id, client.name, client.lastName)"
-      class="pl-2 py-2 hover:bg-accent rounded-md divide-accent cursor-pointer divide-y-2 hover:text-black"
+      class="pl-2 py-2 hover:bg-accent rounded-md divide-accent cursor-pointer divide-y-2"
     >
       {{ client.name }} {{ client.lastName }}
     </p>

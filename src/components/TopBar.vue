@@ -3,7 +3,8 @@ import router from '@/router'
 
 import { ref } from 'vue'
 import { Dialog, DialogPanel } from '@headlessui/vue'
-import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/outline'
+import { Bars3Icon, XMarkIcon, DocumentMagnifyingGlassIcon } from '@heroicons/vue/24/outline'
+import ChangeTheme from '@/components/ChangeTheme.vue'
 
 const mobileMenuOpen = ref<boolean>(false)
 
@@ -32,10 +33,15 @@ const logout = () => {
         </button>
       </div>
       <div class="hidden lg:flex lg:gap-x-12">
-        <XMarkIcon class="w-5 text-neutral"></XMarkIcon>
+        <div
+          class="p-3 items-center text-neutral flex gap-3 rounded-lg hover:bg-primary cursor-pointer"
+        >
+          <DocumentMagnifyingGlassIcon class="w-7"></DocumentMagnifyingGlassIcon>
+          <p class="font-bold">Buscar servicio</p>
+        </div>
       </div>
       <div class="hidden lg:flex text-neutral lg:flex-1 lg:justify-end">
-        <p class="text-neutral">Changetheme</p>
+        <ChangeTheme></ChangeTheme>
       </div>
     </nav>
     <Dialog
@@ -50,11 +56,7 @@ const logout = () => {
       >
         <div class="flex items-center justify-between">
           <a href="#" class="-m-1.5 p-1.5">
-            <img
-              class="pointer h-8 w-auto"
-              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-              alt=""
-            />
+            <img class="pointer h-8 w-auto" src="@/assets/img/logo.png" alt="" />
           </a>
           <button
             type="button"
@@ -66,8 +68,13 @@ const logout = () => {
         </div>
         <div class="mt-6 flow-root">
           <div class="-my-6 divide-y divide-gray-500/10">
-            <div class="space-y-2 py-6">
-              <p>Hola</p>
+            <div class="space-y-2 mt-4 py-6">
+              <div
+                class="p-3 border items-center text-neutral flex gap-3 border-base-300/50 rounded-lg hover:bg-primary cursor-pointer"
+              >
+                <DocumentMagnifyingGlassIcon class="w-7"></DocumentMagnifyingGlassIcon>
+                <p class="font-bold">Buscar servicio</p>
+              </div>
             </div>
           </div>
         </div>

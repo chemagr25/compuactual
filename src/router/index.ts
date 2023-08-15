@@ -6,12 +6,14 @@ import ServicesAll from '@/views/ServicesAll.vue'
 import TechsAll from '@/views/TechsAll.vue'
 import ClientsAll from '@/views/ClientsAll.vue'
 import AdminLayout from '@/layouts/AdminLayout.vue'
-import TechLayout from '@/layouts/TechLayout.vue'
-
+import UserHome from '@/views/UserHome.vue'
 // import CardDetailsVue from '@/components/CardDetails.vue'
 import ClientsDetails from '@/views/ClientsDetails.vue'
 import TechsDetails from '@/views/TechsDetails.vue'
 import ServicesDetails from '@/views/ServicesDetails.vue'
+
+import { UserGuard } from '@/router/auth-guards'
+import HomeVue from '@/views/Home.vue'
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -28,6 +30,18 @@ const router = createRouter({
           component: Login
         }
       ]
+    },
+    {
+      path: '/pivot',
+      name: 'pivot',
+      beforeEnter: [UserGuard],
+      component: HomeVue
+    },
+    {
+      path: '/home',
+      name: 'user-home',
+
+      component: UserHome
     },
 
     //* admin-routes
@@ -69,11 +83,6 @@ const router = createRouter({
           component: TechsDetails
         }
       ]
-    },
-    {
-      path: '/tecnico',
-      name: 'root-tech',
-      component: TechLayout
     }
   ]
 })

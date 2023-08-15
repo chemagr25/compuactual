@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">compuactual-app</string>
+    <string name="title_activity_main">compuactual-app</string>
+    <string name="package_name">com.chemsbyte.compuactual.mx</string>
+    <string name="custom_url_scheme">com.chemsbyte.compuactual.mx</string>
+</resources>

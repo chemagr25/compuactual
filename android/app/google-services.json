@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "1048980544714",
+    "project_id": "compuactual-37946",
+    "storage_bucket": "compuactual-37946.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1048980544714:android:211431d081eec8274e6833",
+        "android_client_info": {
+          "package_name": "com.chemsbyte.com"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1048980544714-0074r4ut5b4g2rd0oju96ndvdjhq45cb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeK_ZAKvOIFRZnnEo651_4Qsv-XG9k-W0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1048980544714-0074r4ut5b4g2rd0oju96ndvdjhq45cb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1048980544714:android:3b74a9499bbe501e4e6833",
+        "android_client_info": {
+          "package_name": "com.chemsbyte.compuactual.mx"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1048980544714-0074r4ut5b4g2rd0oju96ndvdjhq45cb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeK_ZAKvOIFRZnnEo651_4Qsv-XG9k-W0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1048980544714-0074r4ut5b4g2rd0oju96ndvdjhq45cb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
