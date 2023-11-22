@@ -117,7 +117,7 @@ onMounted(() => {
         </div>
         <p class="ml-auto mt-3 font-medium">Total sin piezas: ${{ service?.price }}</p>
         <p class="ml-auto mt-3 font-medium">+ piezas: ${{ totalPartsPrice }}</p>
-        <p v-if="service?.price" class="ml-auto mt-3 font-bold">Total: {{    totalPartsPrice  + service?.price}} </p>
+        <p v-if="service?.price" class="ml-auto mt-3 font-bold">Total: $ {{    totalPartsPrice  + service?.price}} </p>
       </div>
       <div class="w-full h-full mt-11 flex flex-col">
         <div class="flex justify-between items-center  ">
