@@ -1,6 +1,8 @@
 import { apiResources } from '@/api/apiResources'
 import { showToast } from '@/helpers/showToast'
-import type { Service, ServiceResponse } from '@/interfaces/service'
+import { type Service, type ServiceResponse } from '@/interfaces/service'
+import { type Device, type Part } from '@/interfaces/device'
+
 
 import { ref } from 'vue'
 import { useNotification } from '@/composables/useNotificaction'
@@ -15,6 +17,8 @@ const page = ref<number>(0)
 //data for create service
 const brand = ref<string>()
 
+const totalPartsPrice = ref<number>(0)
+
 const model = ref<string>()
 const serialNumber = ref<string>()
 const processor = ref<string>()
@@ -28,6 +32,17 @@ const price = ref<string>()
 const observation = ref<string>('')
 const isLoading = ref<boolean>(false)
 const loadingComment = ref<boolean>(false)
+const idDevice = ref<number>(0)
+
+//DEVICE PART
+const  partName = ref<string>()
+const  partDescription = ref<string>()
+const  partPrice = ref<string>()
+const  partQuantity = ref<string>()
+const  partObservations = ref<string>()
+
+
+const deviceParts = ref<Part[]>([] || undefined)
 
 const service = ref<Service>()
 
@@ -100,7 +115,24 @@ export const useService = () => {
     }
   }
 
+  const getDeviceService = async (id: number) => {
+    if (id === undefined) return
+
+    try {
+      const { data } = await apiResources.get<Device>(`/device/${id}`, {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token_auth')
+        }
+      })
+
+      return data
+    } catch {
+      console.log('error')
+    }
+  }
+
   const getServiceById = async (id: string | number | string[]) => {
+    totalPartsPrice.value = 0
     // isLoading.value = true
     try {
       const { data } = await apiResources.get<Service>(`/services/${id}`, {
@@ -110,9 +142,41 @@ export const useService = () => {
       })
 
       service.value = data
+      idDevice.value = data.device.id
+      const device = await getDeviceService(idDevice.value)
+
+      if (device !== undefined) {
+        deviceParts.value = device.parts
+      }
+      deviceParts.value.forEach((part) => { totalPartsPrice.value +=  part.price*part.quantity})
+
       isLoading.value = false
     } catch {
       isLoading.value = false
+    }
+  }
+
+
+  const setPiece = async () => {
+    try {
+     const data = await apiResources.post('/parts' , {
+        name: partName.value,
+        description: partDescription.value,
+        price: partPrice.value,
+        quantity: partQuantity.value,
+        observations: partObservations.value,
+        deviceId: idDevice.value
+      }, {
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token_auth')
+        }
+      })
+      await getServiceById(idDevice.value)
+      showToast('Exito', 'Pieza agregada correctamente ', 'success')
+      console.log(data)
+    }catch {
+      showToast('Exito', 'Error', 'danger')
+      console.log('error')
     }
   }
 
@@ -163,16 +227,21 @@ export const useService = () => {
           }
         }
       )
-
       getServiceById(idService)
-      
+
       commentText.value = ''
       photoComment.value = null
       loadingComment.value = false
 
-      await sendNotification('Nuevo comentario', `Se agregó un nuevo comentario a su servicio ${service.value?.invoice.split('-').join('')} `,service.value?.client.id+''  )
+      await sendNotification(
+        'Nuevo comentario',
+        `Se agregó un nuevo comentario a su servicio ${service.value?.invoice
+          .split('-')
+          .join('')} `,
+        service.value?.client.id + ''
+      )
     } catch (e) {
-     loadingComment.value = false
+      loadingComment.value = false
     }
   }
 
@@ -202,6 +271,13 @@ export const useService = () => {
     sendMessage,
     photoComment,
     commentText,
-    loadingComment
-  }
+    loadingComment,
+    deviceParts,
+    partName,
+    partDescription,
+    partPrice,
+    partQuantity,
+    partObservations,
+  setPiece,
+totalPartsPrice }
 }

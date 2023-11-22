@@ -1,13 +1,13 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { useTech } from '@/composables/useTech'
+import { UserPlusIcon } from '@heroicons/vue/24/outline'
+import { TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogTitle } from '@headlessui/vue'
 import Loader from './Loader.vue'
 
 const { isLoading, hasError, createTech, username, email, name, lastName, phone, password } =
   useTech()
 
-import { UserPlusIcon } from '@heroicons/vue/24/outline'
-import { ref } from 'vue'
-import { TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogTitle } from '@headlessui/vue'
 
 const isOpen = ref(false)
 
