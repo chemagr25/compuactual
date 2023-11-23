@@ -10,6 +10,7 @@ export default defineConfig({
     vue(),
     VitePWA({
       workbox: {
+        globPatterns: ['**/*.{jpg,png}'],
         runtimeCaching:[{
           urlPattern: ({url}) =>{
             return url.pathname.startsWith('/api')
