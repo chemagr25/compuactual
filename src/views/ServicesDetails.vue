@@ -47,21 +47,36 @@ const uploadImage = (e: any) => {
 
 const takePhoto = async () => {
 
+
+  Camera.checkPermissions().then((result) => {
+   
+  })
+
+  Camera.requestPermissions().then((result) => {
+    
+  })
   const photo = await Camera.getPhoto({
     resultType: CameraResultType.Base64,
     quality: 100,
     source: CameraSource.Prompt,
   });
 
-   
+  if (photo.base64String) {
+    const rawData = atob(photo.base64String);
+    const bytes = new Array(rawData.length);
+    for (let x = 0; x < rawData.length; x++) {
+      bytes[x] = rawData.charCodeAt(x);
+    }
+    const arr = new Uint8Array(bytes);
+    photoComment.value = new Blob([arr], { type: 'image/png' });
 
-  const rawData = atob(photo.base64String as any);
-  const bytes = new Array(rawData.length);
-  for (var x = 0; x < rawData.length; x++) {
-    bytes[x] = rawData.charCodeAt(x);
+    return
+
   }
-  const arr = new Uint8Array(bytes);
-  photoComment.value = new Blob([arr], { type: 'image/png' });
+
+  return
+
+
 
 };
 
@@ -284,6 +299,7 @@ onMounted(() => {
       </div>
     </div>
     <div class="h-40"></div>
-</div></template>
+  </div>
+</template>
 
 <style scoped></style>
