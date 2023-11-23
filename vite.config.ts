@@ -22,7 +22,6 @@ export default defineConfig({
             }
           }
         }],
-        globPatterns: ['**/*.{png,svg, jpg, jpeg}']
       },
       
     })
