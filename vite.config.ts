@@ -12,7 +12,7 @@ export default defineConfig({
       workbox: {
         runtimeCaching:[{
           urlPattern: ({url}) =>{
-            return url.pathname.startsWith('/api')
+            return url.pathname.startsWith('https://compuactual.azurewebsites.net/')
           },
           handler: 'CacheFirst'as const,
           options:{
