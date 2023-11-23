@@ -10,6 +10,7 @@ export default defineConfig({
     vue(),
     VitePWA({
       workbox: {
+        globPatterns: ['**/*.{png,jpg,jpeg,svg}'],
         runtimeCaching:[{
           urlPattern: ({url}) =>{
             return url.pathname.startsWith('https://compuactual.azurewebsites.net/')
