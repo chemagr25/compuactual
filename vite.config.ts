@@ -12,7 +12,7 @@ export default defineConfig({
       workbox: {
         runtimeCaching:[{
           urlPattern: ({url}) =>{
-            return url.pathname.startsWith('https://compuactual.azurewebsites.net')
+            return url.pathname.startsWith('https://compuactual.vercel.app')
           },
           handler: 'CacheFirst'as const,
           options:{
@@ -21,8 +21,10 @@ export default defineConfig({
               statuses: [0,200]
             }
           }
-        }]
-      }
+        }],
+        globPatterns: ['**/*.{png,svg, jpg, jpeg}']
+      },
+      
     })
   ],
   resolve: {
