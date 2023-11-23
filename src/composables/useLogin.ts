@@ -1,6 +1,8 @@
 import { apiAuth } from '@/api/apiAuth'
 import { ref, onMounted } from 'vue'
 import { showToast } from '@/helpers/showToast'
+import { Camera} from '@capacitor/camera';
+
 import type { Login } from '@/interfaces/login'
 import router from '@/router'
 // import type { VueCookies } from 'vue-cookies'
@@ -18,6 +20,22 @@ const hasError = ref<boolean>()
 const token = ref('')
 
   onMounted(() => {
+    PushNotifications.requestPermissions().then((permission) => {
+      if (permission.receive === 'granted') {
+        PushNotifications.register().catch((e) => {
+          console.log(e)
+        })
+      }
+    })
+
+    PushNotifications.checkPermissions().then((permission) => {
+      if (permission.receive === 'granted') {
+        PushNotifications.register().catch((e) => {
+          console.log(e)
+        })
+      }
+    })
+
     PushNotifications.addListener('registration', (tokendevice) => {
       token.value = tokendevice.value
     }).catch((e) => {
@@ -25,8 +43,11 @@ const token = ref('')
     })
 
     PushNotifications.register().catch((e) => {
-      console.log()
+      console.log(e)
     })
+
+
+
   })
 
   const sendLogin = async () => {

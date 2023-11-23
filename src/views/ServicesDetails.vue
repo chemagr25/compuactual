@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
+import { Camera, CameraResultType, CameraSource } from '@capacitor/camera';
 import { useService } from '@/composables/useService'
 import Loader from '@/components/Loader.vue'
 import RatingComponent from '@/components/RatingComponent.vue'
-import { PhotoIcon, PlusCircleIcon } from '@heroicons/vue/24/outline'
+import { PhotoIcon, PlusCircleIcon, CameraIcon } from '@heroicons/vue/24/outline'
 import LoaderButton from '@/components/LoaderButton.vue'
 
 import { capitalize, setColor } from '@/helpers/capitalizestr'
@@ -23,7 +24,7 @@ const {
   sendMessage,
   commentText, photoComment,
   loadingComment,
-  deviceParts,totalPartsPrice } =
+  deviceParts, totalPartsPrice } =
   useService()
 
 const id = ref<string | string[]>(useRoute().params.id)
@@ -44,8 +45,35 @@ const uploadImage = (e: any) => {
   photoComment.value = img
 }
 
+const takePhoto = async () => {
+
+  const photo = await Camera.getPhoto({
+    resultType: CameraResultType.Base64,
+    quality: 100,
+    source: CameraSource.Prompt,
+  });
+
+   
+
+  const rawData = atob(photo.base64String as any);
+  const bytes = new Array(rawData.length);
+  for (var x = 0; x < rawData.length; x++) {
+    bytes[x] = rawData.charCodeAt(x);
+  }
+  const arr = new Uint8Array(bytes);
+  photoComment.value = new Blob([arr], { type: 'image/png' });
+
+};
+
+
+
+
 onMounted(() => {
   getServiceById(id.value)
+
+
+
+
 })
 </script>
 
@@ -117,7 +145,7 @@ onMounted(() => {
         </div>
         <p class="ml-auto mt-3 font-medium">Total sin piezas: ${{ service?.price }}</p>
         <p class="ml-auto mt-3 font-medium">+ piezas: ${{ totalPartsPrice }}</p>
-        <p v-if="service?.price" class="ml-auto mt-3 font-bold">Total: $ {{    totalPartsPrice  + service?.price}} </p>
+        <p v-if="service?.price" class="ml-auto mt-3 font-bold">Total: $ {{ totalPartsPrice + service?.price }} </p>
       </div>
       <div class="w-full h-full mt-11 flex flex-col">
         <div class="flex justify-between items-center  ">
@@ -126,7 +154,7 @@ onMounted(() => {
               Ver mensajes
             </button>
             <dialog id="my_modal_2" class="modal">
-              <form method="dialog" class="modal-box bg-secondary border border-base-300 overflow-auto max-h-80">
+              <form method="dialog" class="modal-box bg-secondary border border-base-300 overflow-auto max-h-[80%]">
                 <div v-for="comment in service?.comments" :key="comment.id"
                   :class="[comment.user.role == 'ROLE_USER' ? 'chat-end' : 'chat-start']" class="chat    ">
                   <div class="chat-header">
@@ -155,7 +183,19 @@ onMounted(() => {
 
                           <input @change="uploadImage" id="file-input" type="file" class="hidden" />
                         </div>
+
                         <span class="sr-only">Upload image</span>
+                      </button>
+
+                      <button @click="takePhoto" type="button"
+                        class="inline-flex justify-center p-2 text-gray-500 rounded-lg cursor-pointer hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-gray-600">
+                        <div class="image-upload">
+                          <label for="takePicture" class="cursor-pointer">
+                            <CameraIcon class="w-5"></CameraIcon>
+                          </label>
+
+                          <input id="takePicture" class="hidden" />
+                        </div>
                       </button>
 
                       <textarea id="chat" rows="1" v-model="commentText"
@@ -191,8 +231,8 @@ onMounted(() => {
             <div class="flex justify-center items-center">
               <button class="btn bg-accent text-white border-none" onclick="partsmodal.showModal()">Servicios y
                 partes</button>
-              <button onclick="formparts.showModal()">
-                <PlusCircleIcon class="w-8 ml-5"></PlusCircleIcon>
+              <button class="ml-5" onclick="formparts.showModal()">
+                <PlusCircleIcon class="w-8 "></PlusCircleIcon>
               </button>
             </div>
             <dialog id="partsmodal" class="modal ">
@@ -202,11 +242,12 @@ onMounted(() => {
                   <button class="btn btn-sm bg-secondary btn-circle btn-ghost absolute right-2 top-2">✕</button>
                 </form>
 
-                <div v-for="part  in deviceParts" :key="part.name" class="bg-white/10 p-2 rounded-lg my-2 flex flex-col gap-2">
+                <div v-for="part  in deviceParts" :key="part.name"
+                  class="bg-white/10 p-2 rounded-lg my-2 flex flex-col gap-2">
                   <div>
-                    <p >{{ part.name }}</p>
-                    <p>${{ part.price }} x {{ part.quantity }}  = ${{ part.price * part.quantity }}</p>
-                    <p> {{ part.description }}</p> 
+                    <p>{{ part.name }}</p>
+                    <p>${{ part.price }} x {{ part.quantity }} = ${{ part.price * part.quantity }}</p>
+                    <p> {{ part.description }}</p>
                   </div>
 
                 </div>
@@ -219,11 +260,16 @@ onMounted(() => {
                 <form method="dialog">
                   <button class="btn btn-sm bg-secondary btn-circle btn-ghost absolute right-2 top-2">✕</button>
                 </form>
-                <input type="text" v-model="partName" placeholder="Pieza" class="input mt-2 border border-base-300 focus:outline-none w-full bg-primary" />
-                <input type="text" v-model="partDescription" placeholder="Descripción" class="input mt-2 border border-base-300 focus:outline-none w-full bg-primary" />
-                <input type="text" v-model="partPrice" placeholder="Precio" class="input mt-2 border border-base-300 focus:outline-none w-full bg-primary" />
-                <input type="text" v-model="partQuantity" placeholder="Cantidad" class="input mt-2 border border-base-300 focus:outline-none w-full bg-primary" />
-                <input type="text" v-model="partObservations" placeholder="Observaciones" class="input mt-2 border border-base-300 focus:outline-none w-full bg-primary" />
+                <input type="text" v-model="partName" placeholder="Pieza"
+                  class="input mt-2 border border-base-300 focus:outline-none w-full bg-primary" />
+                <input type="text" v-model="partDescription" placeholder="Descripción"
+                  class="input mt-2 border border-base-300 focus:outline-none w-full bg-primary" />
+                <input type="text" v-model="partPrice" placeholder="Precio"
+                  class="input mt-2 border border-base-300 focus:outline-none w-full bg-primary" />
+                <input type="text" v-model="partQuantity" placeholder="Cantidad"
+                  class="input mt-2 border border-base-300 focus:outline-none w-full bg-primary" />
+                <input type="text" v-model="partObservations" placeholder="Observaciones"
+                  class="input mt-2 border border-base-300 focus:outline-none w-full bg-primary" />
                 <button @click="setPiece" class="btn mt-4">Enviar</button>
               </div>
             </dialog>
@@ -238,7 +284,6 @@ onMounted(() => {
       </div>
     </div>
     <div class="h-40"></div>
-  </div>
-</template>
+</div></template>
 
 <style scoped></style>

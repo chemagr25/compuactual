@@ -23,7 +23,7 @@ const showSideMobile = ref<boolean>(false)
 <template>
   <main>
     <div class="mb-20">
-      <nav class="bg-secondary text-neutral fixed z-20 h-20 w-full">
+      <nav class="bg-secondary text-neutral fixed z-20 h-14 w-full">
         <div class="px-3 py-3 h-full flex items-center lg:px-5 lg:pl-3">
           <div class="flex items-center w-full justify-between">
             <div class="flex items-center justify-start">
@@ -94,31 +94,31 @@ const showSideMobile = ref<boolean>(false)
       <div class="flex overflow-hidden pt-20">
         <aside
           :class="[showSideMobile ? 'block' : 'hidden']"
-          class="fixed z-10 h-full top-0 left-0 pt-20 lg:flex flex-shrink-0 flex-col w-52 transition-width duration-75"
+          class="fixed z-10 h-full  top-0 left-0 pt-14 lg:flex flex-shrink-0 flex-col w-[10rem] transition-width duration-75"
           aria-label="Sidebar"
         >
           <div
             class="relative flex-1 flex flex-col min-h-0 bg-secondary shadow-2xl text-neutral h-full pt-0"
           >
-            <div class="flex-1 flex flex-col pt-[1.3rem] pb-4 overflow-y-auto">
+            <div class="flex-1 flex flex-col pt-[2rem] pb-4 overflow-y-auto">
               <div class="flex-1  pl-2 pr-4 flex flex-col">
-                <ul v-if="!isUser" class="space-y-4 pb-2">
+                <ul v-if="!isUser" class="space-y-3 ">
                   <li v-for="item in sidebarActions" :key="item.name">
                     <div v-if="!isTech">
                       <router-link
                         v-if="item.visible.aside"
                         :to="{ name: item.name }"
-                        class="text-lg text-gray font-normal hover:bg-accent/20 rounded-lg flex items-center p-2.5 group"
+                        class="text-md text-gray ml-2 hover:font-bold rounded-lg  flex items-center py-3 group"
                       >
-                        <component :is="item.icon.name" class="w-7"></component>
-                        <span class="ml-3 font-normal">{{ item.title }}</span>
+                        <component :is="item.icon.name" class="w-5"></component>
+                        <p class="ml-3 font-normal">{{ item.title }}</p>
                       </router-link>
                     </div>
                     <router-link
                       v-else
                       v-if="item.visible.aside && item.visible.tech"
                       :to="{ name: item.name }"
-                      class="text-lg text-gray font-normal hover:bg-accent/20 rounded-lg flex items-center p-2.5 group"
+                      class="text-lg text-gray ml-2 font-normal hover:font-bold rounded-lg flex items-center p-2.5 group"
                     >
                       <component :is="item.icon.name" class="w-7"></component>
                       <span class="ml-3 font-normal">{{ item.title }}</span>
@@ -131,16 +131,19 @@ const showSideMobile = ref<boolean>(false)
                       <router-link
                         v-if="item.visible.client && item.visible.aside"
                         :to="{ name: item.name }"
-                        class="text-lg text-gray font-normal hover:bg-accent/20 rounded-lg flex items-center p-2.5 group"
-                      >
-                        <component :is="item.icon.name" class="w-7"></component>
-                        <span class="ml-3 font-normal">{{ item.title }}</span>
+                        class="text-lg text-gray ml-2 font-normal hover:bg-accent/20 rounded-lg flex items-center p-2.5 group"
+                      > 
+                      <p>
+                        <component :is="item.icon.name" class="w-8"></component>
+                        <p class="ml-3 font-normal">{{ item.title }}</p>
+
+                      </p>
+                        
                       </router-link>
                     </div>
                   
                   </li>
                 </ul>
-                <!-- <ChangeTheme class="mt-auto justify-center"></ChangeTheme> -->
               </div>
             </div>
           </div>
@@ -148,7 +151,7 @@ const showSideMobile = ref<boolean>(false)
           <div></div>
         </aside>
 
-        <div class="h-full w-full p-3 mt-2 relative overflow-y-auto lg:ml-56">
+        <div class="h-full w-full p-3 mt-2 relative overflow-y-auto lg:ml-44">
           <main>
             <router-view></router-view>
           </main>
@@ -161,8 +164,8 @@ const showSideMobile = ref<boolean>(false)
 </template>
 
 <style scoped>
-.router-link-active {
-  background-color: hsl(var(--a) / 80%);
-  color: white;
+.router-link-active p  {
+  font-weight: bold;
+  font-size: 1.1rem;
 }
 </style>

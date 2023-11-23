@@ -22,7 +22,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        sourceCompatibility 11
+        targetCompatibility 11
+    }
 }
+
+
 
 repositories {
     flatDir{

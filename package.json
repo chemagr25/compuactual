@@ -19,6 +19,7 @@
     "@capacitor/push-notifications": "^5.0.6",
     "@headlessui/vue": "^1.7.15",
     "@heroicons/vue": "^2.0.18",
+    "@ionic/pwa-elements": "^3.2.2",
     "axios": "^1.4.0",
     "mosha-vue-toastify": "^1.0.23",
     "theme-change": "^2.5.0",
