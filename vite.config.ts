@@ -12,7 +12,6 @@ export default defineConfig({
     VitePWA({
 
       workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg}'] ,
         runtimeCaching:[{
           urlPattern: ({url}) =>{
             return url.pathname.startsWith('https://compuactual.azurewebsites.net')
