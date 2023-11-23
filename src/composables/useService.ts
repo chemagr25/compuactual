@@ -242,6 +242,8 @@ export const useService = () => {
       )
     } catch (e) {
       loadingComment.value = false
+
+      showToast('Error', 'Revisa tu conexión a internet e inténtalo nuevamente')
     }
   }
 
