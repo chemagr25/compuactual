@@ -10,12 +10,12 @@ export default defineConfig({
     vue(),
     VitePWA({
       workbox: {
-        globPatterns: ['**/*.{jpg,png,json,html,js,css,svg,woff2,woff,ttf}'],
+        globPatterns: ['**/*.{jpg,jpeg,png,json,html,js,css,svg,woff2,woff,ttf}'],
         runtimeCaching:[{
           urlPattern: ({url}) =>{
             return url.pathname.startsWith('/api')
           },
-          handler: 'CacheFirst'as const,
+          handler: 'NetworkFirst' as const,
           options:{
             cacheName: 'api-cache',
             cacheableResponse: {

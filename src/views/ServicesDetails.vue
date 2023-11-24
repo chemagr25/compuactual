@@ -162,8 +162,8 @@ onMounted(() => {
         <p class="ml-auto mt-3 font-medium">+ piezas: ${{ totalPartsPrice }}</p>
         <p v-if="service?.price" class="ml-auto mt-3 font-bold">Total: $ {{ totalPartsPrice + service?.price }} </p>
       </div>
-      <div class="w-full h-full mt-11 flex flex-col">
-        <div class="flex justify-between items-center  ">
+      <div class="w-full   h-full mt-11 flex flex-col">
+        <div 1class=" justify-center  items-center  gap-4  flex flex-col  ">
           <div class="flex justify-center  flex-col items-center">
             <button class="btn btn-accent text-white" onclick="my_modal_2.showModal()">
               Ver mensajes
@@ -288,13 +288,10 @@ onMounted(() => {
                 <button @click="setPiece" class="btn mt-4">Enviar</button>
               </div>
             </dialog>
-
           </div>
 
 
-          <div class="flex justify-end items-end">
-            <RatingComponent></RatingComponent>
-          </div>
+        
         </div>
       </div>
     </div>

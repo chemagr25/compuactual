@@ -3,7 +3,7 @@ import router from '@/router'
 
 import { ref, onMounted } from 'vue'
 import { Dialog, DialogPanel } from '@headlessui/vue'
-import { Bars3Icon, XMarkIcon, DocumentMagnifyingGlassIcon } from '@heroicons/vue/24/outline'
+import { Bars3Icon, XMarkIcon, DocumentMagnifyingGlassIcon,ArrowLeftIcon } from '@heroicons/vue/24/outline'
 import ChangeTheme from '@/components/ChangeTheme.vue'
 import { useClient } from '@/composables/useClient'
 import { useService } from '@/composables/useService'
@@ -14,6 +14,11 @@ const { getServiceById, service } = useService()
 const { getClientById, clientById } = useClient()
 
 const services = ref<any>([])
+
+const goBack = () => {
+    router.go(-1)
+}
+
 
 const mobileMenuOpen = ref<boolean>(false)
 const logout = () => {
@@ -43,7 +48,10 @@ onMounted(async () => {
     <header class="bg-secondary border-y border-base-300 shadow-lg">
         <nav class="mx-auto h-12 py-10 flex max-w-7xl items-center justify-between p-6 lg:px-8">
             <div class="flex lg:flex-1">
+
                 <img @click="logout" class="h-12 rounded-xl w-auto" src="@/assets/img/logo.png" alt="" />
+
+                <p>hola</p>
             </div>
             <div class="flex lg:hidden">
                 <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
